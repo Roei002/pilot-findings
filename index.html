@@ -630,7 +630,8 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     return names;
   }
   function canDel(f) { return !!S.me && (S.me.isAdmin || f.reporterId === S.me.id); }
-  function isMine(f) { return f.assigneeId === S.me.id; } // "הממצאים שלי" = only what is assigned to me
+  // "הממצאים שלי" = assigned to me; a finding with no assignee stays with the person who wrote it, so nothing is left without an owner
+  function isMine(f) { return f.assigneeId === S.me.id || (f.assigneeId == null && f.reporterId === S.me.id); }
   function isOverdue(f, k) { k = k || today(); return OPEN.indexOf(f.status) >= 0 && f.dueDate && f.dueDate < k; }
   function dueCls(f) { if (OPEN.indexOf(f.status) < 0 || !f.dueDate) return 'due'; if (f.dueDate < today()) return 'due over'; if (f.dueDate === today()) return 'due today'; return 'due'; }
   function statusAt(f, k) {
@@ -897,7 +898,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     var mineN = S.findings.filter(isMine).length;
     var mineOpen = S.findings.filter(function (f) { return isMine(f) && OPEN.indexOf(f.status) >= 0; }).length;
     var seg = function (v, label, n) { var on = scope === v; return '<button class="btn' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-a="scope" data-v="' + v + '">' + label + '<span class="count">' + n + '</span></button>'; };
-    return '<div class="page-h"><div class="grow"><h1>' + (scope === 'mine' ? 'הממצאים שלי' : 'כל הממצאים') + '</h1><span class="sub">' + (scope === 'mine' ? mineN + ' ממצאים שמשויכים אליך · ' + mineOpen + ' פתוחים' : S.findings.length + ' ממצאים של כל הצוות') + '</span></div>' +
+    return '<div class="page-h"><div class="grow"><h1>' + (scope === 'mine' ? 'הממצאים שלי' : 'כל הממצאים') + '</h1><span class="sub">' + (scope === 'mine' ? mineN + ' ממצאים שמשויכים אליך (או שרשמת ולא שויכו) · ' + mineOpen + ' פתוחים' : S.findings.length + ' ממצאים של כל הצוות') + '</span></div>' +
       '<span class="hide-m">' + syncIndicator() + '</span>' +
       (S.me.isAdmin ? '<button class="btn hide-m" data-a="exportCsv">' + I.download() + 'ייצוא ל-Excel</button>' : '') + '</div>' +
       '<div class="toolbar">' + seg('mine', 'הממצאים שלי', mineN) + seg('all', 'של כולם', S.findings.length) +
