@@ -159,6 +159,10 @@ svg{flex:0 0 auto}
 .st-more{position:absolute;left:0;top:1px;width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);background:var(--surface);color:var(--text);box-shadow:0 2px 8px rgba(16,24,40,.15);display:none;align-items:center;justify-content:center;cursor:pointer;z-index:2;padding:0}
 .stwrap.more-end .st-more{display:flex}
 
+.mod-btn{height:34px;max-width:100%}
+.mod-btn b{font-weight:600;display:inline-block;vertical-align:bottom}
+.mod-menu{min-width:240px}
+
 /* ---------- table */
 .table{border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow-x:auto}
 .thead,.trow{display:flex;align-items:center;padding-inline:12px}
@@ -752,7 +756,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
       return '<a href="#/' + n[0] + '" class="' + (r === n[0] ? 'active' : '') + '">' + n[2] + n[1] + '</a>';
     }).join('') + '</nav>';
     var fab = r !== 'add' ? '<a class="fab" href="#/add">' + I.plus(20, 2.4) + 'ממצא חדש</a>' : '';
-    var backdrop = S.menu ? '<button class="backdrop' + (S.menu === 'qa-as' ? ' sheet-bg' : '') + '" data-a="closeMenus" aria-label="סגירת התפריט"></button>' : '';
+    var backdrop = S.menu ? '<button class="backdrop' + (S.menu === 'qa-as' || S.menu === 'mod-f' ? ' sheet-bg' : '') + '" data-a="closeMenus" aria-label="סגירת התפריט"></button>' : '';
     return '<div class="shell">' + backdrop + side + '<main class="main">' + mobileTop + content + '</main></div>' + rowMenu() + tabbar + fab + (S.drawer ? viewDrawer() : '') + (S.modal ? viewModal() : '');
   }
 
@@ -825,6 +829,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     if (k === 'assignee') return f.assigneeId == null ? 'none' : String(f.assigneeId);
     if (k === 'owner') return String(f.ownerId);
     if (k === 'reporter') return String(f.reporterId);
+    if (k === 'module') return f.module || '';
     return f[k];
   }
   function matchDate(f, d) {
@@ -888,6 +893,21 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     var stDef = ST_FILTERS.find(function (x) { return x[0] === stSel; }) || ST_FILTERS[0];
     L.f.status = stDef[2] ? stDef[2].slice() : [];
     var inScope = S.findings.filter(function (f) { return scope === 'all' || isMine(f); });
+    var modSel = L.mod || '';
+    if (modSel) L.f.module = [modSel === '__none' ? '' : modSel];
+    var stScoped = inScope.filter(function (f) { return !L.f.status.length || L.f.status.indexOf(f.status) >= 0; });
+    var modCnt = function (m) { return stScoped.filter(function (f) { return (f.module || '') === m; }).length; };
+    var modOpen = S.menu === 'mod-f';
+    var modLabel = modSel ? (modSel === '__none' ? 'ללא מודול' : modSel) : 'הכל';
+    var modItem = function (v, label, n) {
+      var on = modSel === v;
+      return '<button type="button" role="option" aria-selected="' + on + '" class="menu-item" data-a="modFilter" data-v="' + esc(v) + '"><span style="flex:1">' + esc(label) + '</span><span class="menu-meta">' + n + '</span>' + (on ? '<span style="color:var(--accent-text);display:inline-flex">' + I.check() + '</span>' : '') + '</button>';
+    };
+    var modMenu = modOpen ? '<div class="menu assign-menu mod-menu" role="listbox" aria-label="סינון לפי מודול"><div class="sheet-grip show-m" aria-hidden="true"></div><div class="menu-h sheet-h">סינון לפי מודול / מסך<button type="button" class="btn icon show-m" data-a="closeMenus" aria-label="סגירה">' + I.x(16) + '</button></div>' +
+      modItem('', 'כל המודולים', stScoped.length) +
+      moduleNames().filter(function (m) { return modCnt(m) > 0 || modSel === m; }).map(function (m) { return modItem(m, m, modCnt(m)); }).join('') +
+      (modCnt('') || modSel === '__none' ? modItem('__none', 'ללא מודול', modCnt('')) : '') + '</div>' : '';
+    var modBtn = '<div class="dd"><button type="button" class="btn mod-btn' + (modSel ? ' on' : '') + '" aria-haspopup="listbox" aria-expanded="' + modOpen + '" data-a="menu" data-v="mod-f">מודול / מסך: <b class="truncate" style="max-width:120px">' + esc(modLabel) + '</b>' + I.chev(13) + '</button>' + modMenu + '</div>';
     var stChips = '<div class="stchips" role="radiogroup" aria-label="סינון לפי סטטוס">' + ST_FILTERS.map(function (x) {
       var n = x[2] ? inScope.filter(function (f) { return x[2].indexOf(f.status) >= 0; }).length : inScope.length;
       if (!n && x[0] !== stSel && x[0] !== 'notdone' && x[0] !== 'all') return '';
@@ -902,7 +922,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
       '<span class="hide-m">' + syncIndicator() + '</span>' +
       (S.me.isAdmin ? '<button class="btn hide-m" data-a="exportCsv">' + I.download() + 'ייצוא ל-Excel</button>' : '') + '</div>' +
       '<div class="toolbar">' + seg('mine', 'הממצאים שלי', mineN) + seg('all', 'של כולם', S.findings.length) +
-      '<div class="search"><label for="q" class="sr">חיפוש ממצאים</label>' + I.search() + '<input id="q" type="search" class="input" placeholder="חיפוש לפי מילה או מספר" value="' + esc(L.q) + '" data-i="q"></div></div>' +
+      '<div class="search"><label for="q" class="sr">חיפוש ממצאים</label>' + I.search() + '<input id="q" type="search" class="input" placeholder="חיפוש לפי מילה או מספר" value="' + esc(L.q) + '" data-i="q"></div>' + modBtn + '</div>' +
       '<div class="stwrap">' + stChips + '<button type="button" class="st-more" data-a="stMore" aria-label="עוד אפשרויות סינון" title="עוד">' + I.next(16) + '</button></div>' +
       '<div id="list-results">' + listResults() + '</div>';
   }
@@ -1418,6 +1438,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
       try { c.scrollBy({ left: -step, behavior: 'smooth' }); } catch (e) { /* old browsers */ }
       setTimeout(function () { if (c.scrollLeft === start) { c.scrollLeft = target; updateStFade(); } }, 350); // fallback if smooth scrolling is not available
     },
+    modFilter: function (el) { S.list.mod = el.getAttribute('data-v'); S.menu = null; render(); },
     stFilter: function (el) { S.list.st = el.getAttribute('data-v'); S.menu = null; render(); },
     pickName: function (el) { enterAs(el.getAttribute('data-v')); },
     menu: function (el) {
