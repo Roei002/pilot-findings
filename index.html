@@ -1,0 +1,1634 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>ממצאי פיילוט</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233554D1'/%3E%3Cpath d='M22 26V7H11l2.5 4.5L11 16h11' fill='none' stroke='white' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ממצאי פיילוט">
+<meta name="theme-color" content="#3554D1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F7F9;--surface:#FFFFFF;--surface-2:#F3F4F7;--hover:#F5F6F9;--sel:#ECEFFA;--border:#E3E5EA;--border-strong:#CDD1D9;
+  --text:#16181D;--text-2:#474C58;--text-3:#676C79;
+  --accent:#3554D1;--accent-hover:#2B47B8;--accent-fg:#FFFFFF;--accent-soft:#EDF1FE;--accent-text:#2B47B8;
+  --ok:#0E7A43;--ok-soft:#E3F5EA;--ok-bd:#B9E3C9;--warn:#8F5200;--warn-soft:#FDF1DC;--danger:#B42318;--danger-soft:#FDECEA;--danger-bd:#F6C9C4;
+  --toast:#1F222A;--shadow:0 1px 2px rgba(16,24,40,.06),0 10px 28px rgba(16,24,40,.12);--shadow-sm:0 1px 2px rgba(16,24,40,.05),0 8px 24px rgba(16,24,40,.07);
+  --st-open-bg:#E7EFFD;--st-open-fg:#1B4DB1;--st-open-dot:#2F6FE4;
+  --st-progress-bg:#FDF1DC;--st-progress-fg:#874A00;--st-progress-dot:#E08A00;
+  --st-feedback-bg:#F0EAFD;--st-feedback-fg:#5B2FC0;--st-feedback-dot:#8B5CF6;
+  --st-resolved-bg:#E2F5EA;--st-resolved-fg:#0B6637;--st-resolved-dot:#16A35A;
+  --st-closed-bg:#ECEEF2;--st-closed-fg:#3F4552;--st-closed-dot:#5F6675;
+  --st-irrelevant-fg:#676C79;--st-irrelevant-dot:#A3A8B3;--st-irrelevant-bd:#D5D8DE;
+  --sev-critical:#D92D20;--sev-critical-fg:#B42318;--sev-critical-bg:#FDECEA;
+  --sev-high:#E8590C;--sev-high-fg:#B54708;--sev-high-soft:#FEF0E7;
+  --sev-medium:#D29A00;--sev-medium-fg:#8A6100;--sev-low:#8A909B;--sev-low-fg:#5C616D;--bar-off:#DDE0E5;
+  --sk:#ECEEF2;--sk-hi:#F6F7F9;
+}
+html.dark{
+  --bg:#0E1014;--surface:#16181E;--surface-2:#1B1E25;--hover:#1E2129;--sel:#1F2536;--border:#272B34;--border-strong:#363B46;
+  --text:#E8EAEE;--text-2:#B9BEC8;--text-3:#8E94A0;
+  --accent:#4562EA;--accent-hover:#5571F0;--accent-fg:#FFFFFF;--accent-soft:rgba(98,128,250,.16);--accent-text:#A3B5FF;
+  --ok:#5FD38F;--ok-soft:rgba(40,190,110,.14);--ok-bd:rgba(60,200,120,.35);--warn:#F2B866;--warn-soft:rgba(240,160,40,.14);--danger:#FF8F87;--danger-soft:rgba(240,70,60,.15);--danger-bd:rgba(240,90,80,.35);
+  --toast:#2A2E38;--shadow:0 1px 2px rgba(0,0,0,.4),0 14px 36px rgba(0,0,0,.5);--shadow-sm:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.35);
+  --st-open-bg:rgba(70,130,240,.17);--st-open-fg:#A3C4FF;--st-open-dot:#5B93F5;
+  --st-progress-bg:rgba(240,160,40,.16);--st-progress-fg:#F5C57E;--st-progress-dot:#F0A43A;
+  --st-feedback-bg:rgba(160,120,250,.17);--st-feedback-fg:#CDB9FF;--st-feedback-dot:#A788FA;
+  --st-resolved-bg:rgba(40,190,110,.15);--st-resolved-fg:#93DFB4;--st-resolved-dot:#34C27A;
+  --st-closed-bg:rgba(150,160,175,.15);--st-closed-fg:#C6CBD4;--st-closed-dot:#8D94A1;
+  --st-irrelevant-fg:#8E94A0;--st-irrelevant-dot:#6B717D;--st-irrelevant-bd:#3A3F4A;
+  --sev-critical:#F0605A;--sev-critical-fg:#FFA39C;--sev-critical-bg:rgba(240,70,60,.17);
+  --sev-high:#F3833F;--sev-high-fg:#F8AC7C;--sev-high-soft:rgba(243,131,63,.15);
+  --sev-medium:#E2B23A;--sev-medium-fg:#EDCB72;--sev-low:#7D8390;--sev-low-fg:#A6ACB7;--bar-off:#343944;
+  --sk:#1F232B;--sk-hi:#272B35;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text)}
+body{font-family:Heebo,Assistant,"Segoe UI",system-ui,sans-serif;font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font-family:inherit;color:inherit}
+a{color:var(--accent-text);text-decoration:none}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.truncate{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.muted{color:var(--text-3)}
+.boot{padding:80px;text-align:center;color:var(--text-3)}
+svg{flex:0 0 auto}
+
+/* ---------- layout */
+.shell{min-height:100vh;display:flex;align-items:stretch}
+.side{width:248px;flex:0 0 248px;display:flex;flex-direction:column;gap:20px;padding:16px 12px;background:var(--surface);border-inline-end:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 6px}
+.logo{width:32px;height:32px;border-radius:8px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.brand-t{font-weight:700;font-size:15px}
+.brand-s{font-size:12px;color:var(--text-3)}
+.pilot-card{padding:12px;border-radius:10px;background:var(--surface-2);display:flex;flex-direction:column;gap:8px}
+.progress{height:6px;border-radius:999px;background:var(--border);overflow:hidden}
+.progress>div{height:100%;background:var(--accent);border-radius:999px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:10px;height:36px;padding:0 10px;border-radius:8px;color:var(--text-2);font-size:13.5px;font-weight:500}
+.nav a:hover{background:var(--hover);color:var(--text)}
+.nav a.active{background:var(--sel);color:var(--text);font-weight:600}
+.nav a svg{color:var(--text-3)}
+.nav a.active svg{color:var(--accent-text)}
+.count{font-size:11.5px;font-weight:600;color:var(--text-3);font-variant-numeric:tabular-nums;padding:1px 7px;border-radius:999px;background:var(--surface-2)}
+.tagm{font-size:11px;font-weight:600;color:var(--text-3);border:1px solid var(--border);border-radius:5px;padding:0 5px}
+.side-user{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px 6px 0;border-top:1px solid var(--border)}
+.main{flex:1;min-width:0;display:flex;flex-direction:column;padding:0 24px 32px}
+.page-h{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:18px 0 10px}
+.page-h h1{margin:0;font-size:20px;font-weight:700}
+.page-h .sub{font-size:12.5px;color:var(--text-3)}
+.grow{margin-inline-end:auto;display:flex;flex-direction:column;gap:2px}
+.tabbar{display:none}
+.mobile-top{display:none}
+
+/* ---------- controls */
+.btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--hover);border-color:var(--border-strong);color:var(--text)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg);font-weight:600}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--accent-fg)}
+.btn.danger{color:var(--danger);border-color:var(--danger-bd)}
+.btn.danger:hover{background:var(--danger-soft)}
+.btn.on{background:var(--accent-soft);border-color:transparent;color:var(--accent-text)}
+.btn.icon{width:32px;padding:0;justify-content:center}
+.btn.sm{height:28px;padding:0 10px;font-size:12.5px}
+.btn.lg{height:44px;padding:0 18px;font-size:15px;border-radius:10px}
+.badge{min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:var(--accent-fg);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.input,.select,.textarea{height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13.5px;padding:0 10px;outline:none;width:100%}
+.textarea{height:auto;min-height:90px;padding:8px 10px;resize:vertical;line-height:1.5}
+.input::placeholder,.textarea::placeholder{color:var(--text-3)}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field>label,.flabel{font-size:12.5px;font-weight:600;color:var(--text-2)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.switch{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:13px;font-weight:500;cursor:pointer}
+.switch:hover{background:var(--hover)}
+.track{position:relative;width:28px;height:16px;border-radius:999px;background:var(--border-strong);transition:background .15s}
+.knob{position:absolute;top:2px;inset-inline-start:2px;width:12px;height:12px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:inset-inline-start .15s}
+.switch.on{border-color:transparent;background:var(--accent-soft);color:var(--accent-text)}
+.switch.on .track{background:var(--accent)}
+.switch.on .knob{inset-inline-start:14px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:0}
+.sec-t{margin:0;font-size:15px;font-weight:700}
+
+/* ---------- tabs & filters */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tab{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 10px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;color:var(--text-2);font-size:13.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 0 10px}
+.search{position:relative;flex:0 1 280px;min-width:190px}
+.search svg{position:absolute;inset-inline-start:10px;top:9px;color:var(--text-3)}
+.search .input{padding-inline-start:32px}
+.dd{position:relative}
+.menu{position:absolute;inset-inline-start:0;top:calc(100% + 4px);z-index:30;min-width:220px;max-height:360px;overflow-y:auto;padding:4px;border-radius:10px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:1px}
+.menu.end{inset-inline-start:auto;inset-inline-end:0}
+.menu.up{top:auto;bottom:calc(100% + 4px)}
+.menu-h{padding:6px 8px 4px;font-size:11.5px;font-weight:600;color:var(--text-3)}
+.menu-item{display:flex;align-items:center;gap:8px;width:100%;min-height:32px;padding:0 8px;border:0;border-radius:6px;background:none;color:var(--text);font-size:13px;text-align:start;cursor:pointer}
+.menu-item:hover{background:var(--hover)}
+.menu-meta{font-size:11.5px;color:var(--text-3)}
+.chk{width:15px;height:15px;margin:0;accent-color:var(--accent);flex:0 0 auto}
+.backdrop{position:fixed;inset:0;z-index:20;border:0;padding:0;background:transparent;cursor:default}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:0 0 12px}
+.chip{display:inline-flex;align-items:center;gap:4px;height:26px;padding-inline:10px 3px;border-radius:7px;background:var(--surface);border:1px solid var(--border);font-size:12.5px}
+.chip-x{width:20px;height:20px;border-radius:5px;border:0;background:none;color:var(--text-3);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.chip-x:hover{background:var(--hover);color:var(--text)}
+.link-btn{border:0;background:none;padding:0 4px;height:26px;color:var(--accent-text);font-size:12.5px;font-weight:600;cursor:pointer}
+.link-btn:hover{text-decoration:underline}
+
+/* ---------- table */
+.table{border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow-x:auto}
+.thead,.trow{display:flex;align-items:center;padding-inline:12px}
+.thead{height:36px;background:var(--surface-2);border-radius:12px 12px 0 0}
+.trow{min-height:44px;border-top:1px solid var(--border);transition:background .1s;cursor:pointer}
+.trow:hover{background:var(--hover)}
+.trow.dim .rt{color:var(--text-3)}
+.th{display:inline-flex;align-items:center;gap:4px;border:0;background:none;padding:0;height:28px;font-size:12px;font-weight:600;color:var(--text-3);cursor:pointer;white-space:nowrap}
+.th:hover,.th.active{color:var(--text)}
+.th .ind{font-size:11px;color:var(--accent-text)}
+.c-id{font-size:12.5px;color:var(--text-3);font-variant-numeric:tabular-nums}
+.meta{display:inline-flex;align-items:center;gap:3px}
+.cell-btn{display:flex;align-items:center;gap:7px;max-width:100%;height:28px;padding:0 6px;margin-inline-start:-6px;border-radius:6px;border:0;background:none;color:var(--text);font-size:13px;cursor:pointer;min-width:0}
+.cell-btn:hover{background:var(--surface-2)}
+.cell-btn .chev{opacity:0;color:var(--text-3)}
+.trow:hover .cell-btn .chev{opacity:1}
+
+.row-del{border-color:transparent;background:none;color:var(--text-3);opacity:.55}
+.trow:hover .row-del{opacity:1}
+.row-del:hover{color:var(--danger);background:var(--danger-soft);border-color:transparent}
+.card-del{border-color:transparent;background:none;color:var(--text-3);width:36px;height:36px}
+.card-del:hover{color:var(--danger);background:var(--danger-soft)}
+
+/* ---------- pills */
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;border:1px solid transparent;font-size:12.5px;font-weight:500;white-space:nowrap}
+button.pill{cursor:pointer}
+.pill .chev{opacity:.5}
+.pill:hover .chev{opacity:1}
+.st-open{background:var(--st-open-bg);color:var(--st-open-fg)}
+.st-progress{background:var(--st-progress-bg);color:var(--st-progress-fg)}
+.st-feedback{background:var(--st-feedback-bg);color:var(--st-feedback-fg)}
+.st-resolved{background:var(--st-resolved-bg);color:var(--st-resolved-fg)}
+.st-closed{background:var(--st-closed-bg);color:var(--st-closed-fg)}
+.st-irrelevant{background:transparent;color:var(--st-irrelevant-fg);border-color:var(--st-irrelevant-bd)}
+.dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;display:inline-block}
+.d-open{background:var(--st-open-dot)}
+.d-progress{background:var(--st-progress-dot)}
+.d-feedback{background:var(--st-feedback-dot)}
+.d-resolved{background:var(--st-resolved-dot)}
+.d-closed{background:var(--st-closed-dot)}
+.d-irrelevant{background:transparent;box-shadow:inset 0 0 0 1.5px var(--st-irrelevant-dot)}
+.d-critical{background:var(--sev-critical)}
+.d-high{background:var(--sev-high)}
+.d-medium{background:var(--sev-medium)}
+.d-low{background:var(--sev-low)}
+.sev{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;white-space:nowrap}
+.sev rect{fill:var(--bar-off)}
+.sev-low{color:var(--sev-low-fg)}
+.sev-low .b1{fill:var(--sev-low)}
+.sev-medium{color:var(--sev-medium-fg)}
+.sev-medium .b1,.sev-medium .b2{fill:var(--sev-medium)}
+.sev-high{color:var(--sev-high-fg)}
+.sev-high rect{fill:var(--sev-high)}
+.sev-crit{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:6px;background:var(--sev-critical-bg);color:var(--sev-critical-fg);font-size:12px;font-weight:700;white-space:nowrap}
+.av{width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:#fff;font-size:9.5px;font-weight:700;letter-spacing:-.02em}
+.av-sm{width:20px;height:20px;font-size:9px}
+.av-lg{width:30px;height:30px;font-size:11px}
+.av-empty{background:transparent;border:1.5px dashed var(--border-strong)}
+.due{font-size:12.5px;color:var(--text-2);display:inline-flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.due.over{color:var(--danger);font-weight:600}
+.due.today{color:var(--warn);font-weight:600}
+
+/* ---------- sync indicator */
+.sync{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-3);white-space:nowrap;border:0;background:none;padding:0;cursor:default}
+.sync.err{color:var(--danger);font-weight:600;height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--danger-bd);background:var(--danger-soft);cursor:pointer}
+
+/* ---------- quick add */
+.qa{width:100%;max-width:760px;margin:0 auto;padding:28px 0 48px;display:flex;flex-direction:column;gap:20px}
+.qa h1{margin:0;font-size:28px;font-weight:700;line-height:1.25}
+.qa-form{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-sm);padding:24px;display:flex;flex-direction:column;gap:22px}
+.lab{font-size:14px;font-weight:600}
+.lab small{font-weight:400;color:var(--text-3);font-size:13px}
+.ta{width:100%;min-height:140px;resize:vertical;border:1.5px solid var(--border-strong);border-radius:12px;background:var(--surface);color:var(--text);font-size:17px;line-height:1.55;padding:14px 16px;outline:none}
+.ta::placeholder{color:var(--text-3)}
+.ta:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.mchip{height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--border);background:var(--surface);font-size:14.5px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.mchip:hover{border-color:var(--border-strong);background:var(--hover)}
+.mchip.on{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-text);font-weight:600}
+.seg{flex:1 1 0;min-height:48px;border:1.5px solid var(--border);background:var(--surface);border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;padding:0 10px;min-width:90px}
+.seg:hover{background:var(--hover)}
+.seg.on.low{border-color:var(--text-3);background:var(--surface-2);font-weight:600}
+.seg.on.medium{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-text);font-weight:600}
+.seg.on.high{border-color:var(--sev-high);background:var(--sev-high-soft);color:var(--sev-high-fg);font-weight:600}
+.seg.on.critical{border-color:var(--sev-critical);background:var(--sev-critical-bg);color:var(--sev-critical-fg);font-weight:700}
+.sd{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.addbtn{height:52px;padding:0 28px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-fg);font-size:17px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+.addbtn:hover{background:var(--accent-hover)}
+.addbtn:disabled{opacity:.45;cursor:not-allowed}
+.ghost{height:40px;padding:0 14px;border-radius:10px;border:1px dashed var(--border-strong);background:transparent;color:var(--text-2);font-size:14px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.ghost:hover{background:var(--hover);color:var(--text)}
+.kbd{font-family:ui-monospace,Consolas,monospace;font-size:12px;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 6px;color:var(--text-2);background:var(--surface-2);direction:ltr;display:inline-block}
+.autofill{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:12px;background:var(--surface-2)}
+.success{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--ok-soft);border:1px solid var(--ok-bd);color:var(--ok);flex-wrap:wrap}
+.success .linkbtn{border:0;background:none;color:inherit;font-size:13.5px;font-weight:700;text-decoration:underline;cursor:pointer;padding:0 4px;height:32px}
+.li{display:flex;align-items:center;gap:12px;padding:12px 18px;border-top:1px solid var(--border);font-size:14px;min-height:52px;cursor:pointer}
+.li:hover{background:var(--hover)}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px}
+.thumb{position:relative;width:88px;height:66px;border-radius:8px;border:1px solid var(--border);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-3);text-align:center;padding:4px}
+.thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.thumb .x{position:absolute;top:2px;inset-inline-end:2px;width:20px;height:20px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;z-index:1}
+details.more summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--text-2);list-style:none;display:inline-flex;align-items:center;gap:6px}
+details.more summary::-webkit-details-marker{display:none}
+details.more[open] summary .chev{transform:rotate(180deg)}
+
+/* ---------- drawer */
+.drawer-bg{position:fixed;inset:0;background:rgba(10,12,16,.35);z-index:50}
+.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(720px,100vw);background:var(--surface);z-index:51;box-shadow:var(--shadow);display:flex;flex-direction:column;border-inline-start:1px solid var(--border)}
+.drawer-h{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.drawer-b{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:18px}
+.title-input{font-size:20px;font-weight:700;border:1px solid transparent;border-radius:8px;padding:4px 8px;margin-inline-start:-8px;width:100%;background:none;outline:none}
+.title-input:hover{border-color:var(--border)}
+.title-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.timeline{display:flex;flex-direction:column;gap:10px}
+.tl{display:flex;gap:10px;font-size:13px}
+.tl .body{flex:1;min-width:0}
+.comment{background:var(--surface-2);border-radius:10px;padding:8px 12px;white-space:pre-wrap;word-break:break-word}
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+
+/* ---------- summary */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.kpi .n{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .l{font-size:13px;color:var(--text-2);font-weight:500}
+.kpi.alert .n{color:var(--danger)}
+.seg-ctrl{display:inline-flex;align-items:center;border:1px solid var(--border);border-radius:8px;background:var(--surface);overflow:hidden}
+.seg-ctrl button{height:32px;min-width:32px;border:0;background:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.seg-ctrl button:hover:not(:disabled){background:var(--hover)}
+.seg-ctrl button:disabled{opacity:.35;cursor:default}
+.seg-ctrl input{height:32px;border:0;border-inline:1px solid var(--border);background:none;padding:0 8px;font-size:13px;outline:none}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card-h{display:flex;align-items:center;gap:10px;padding:14px 16px 0}
+.brk{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--border);font-size:13px}
+.brk:first-child{border-top:0}
+.stack{flex:1;display:flex;height:10px;border-radius:999px;overflow:hidden;background:var(--surface-2);min-width:60px}
+.stack>span{height:100%}
+.num{font-variant-numeric:tabular-nums;color:var(--text-2);font-size:12.5px;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--text-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.chart{position:relative;height:230px;padding:10px 16px 0}
+.chart svg{width:100%;height:100%;overflow:visible}
+.chart .gl{stroke:var(--border);stroke-width:1}
+.chart .ax{fill:var(--text-3);font-size:11px}
+.tip{position:absolute;pointer-events:none;background:var(--toast);color:#fff;font-size:12px;padding:6px 10px;border-radius:8px;white-space:nowrap;transform:translate(50%,-110%);z-index:5}
+.glist .li{padding:10px 16px;min-height:44px;font-size:13.5px}
+.modal-bg{position:fixed;inset:0;background:rgba(10,12,16,.45);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px}
+.modal{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);width:min(620px,100%);max-height:90vh;display:flex;flex-direction:column}
+.modal-h{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.modal-b{padding:16px 18px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.modal-f{display:flex;gap:8px;justify-content:flex-start;padding:12px 18px;border-top:1px solid var(--border)}
+pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:var(--surface-2);border-radius:10px;padding:12px 14px;margin:0;max-height:50vh;overflow:auto}
+
+/* ---------- kanban */
+.kanban{display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
+.kcol{background:var(--surface-2);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:240px}
+.kcol.drop{outline:2px dashed var(--accent);outline-offset:-2px}
+.kcol-h{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13px;padding:2px 4px 4px}
+.kcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;cursor:grab}
+.kcard:active{cursor:grabbing}
+.kcard.dragging{opacity:.4}
+
+/* ---------- settings / auth */
+.settings{display:flex;flex-direction:column;gap:16px;max-width:980px}
+.settings .card{padding:18px}
+.settings h2{margin:0 0 4px;font-size:16px}
+.urow{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--border);flex-wrap:wrap}
+.code{font-family:ui-monospace,Consolas,monospace;font-size:12px;direction:ltr;unicode-bidi:embed;word-break:break-all}
+.auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.auth .card{width:min(420px,100%);padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-sm)}
+.auth h1{margin:0;font-size:22px}
+.err-box{padding:10px 12px;border-radius:10px;background:var(--danger-soft);border:1px solid var(--danger-bd);color:var(--danger);font-size:13px}
+.ok-box{padding:10px 12px;border-radius:10px;background:var(--ok-soft);border:1px solid var(--ok-bd);color:var(--ok);font-size:13px}
+.alert{display:flex;gap:12px;padding:14px 16px;border-radius:12px;border:1px solid var(--danger-bd);background:var(--danger-soft)}
+.empty{padding:56px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border-top:1px solid var(--border)}
+.sk{display:block;height:10px;border-radius:5px;background:linear-gradient(90deg,var(--sk) 0%,var(--sk-hi) 50%,var(--sk) 100%);background-size:200% 100%;animation:sh 1.4s ease-in-out infinite}
+@keyframes sh{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+/* ---------- toast */
+#toast-root{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{display:flex;align-items:center;gap:12px;padding:8px;padding-inline-start:14px;border-radius:10px;background:var(--toast);color:#fff;box-shadow:var(--shadow);font-size:13px;white-space:nowrap;max-width:92vw}
+.toast.err{background:#9E1C12}
+.toast-btn{border:0;background:rgba(255,255,255,.14);color:#fff;height:28px;padding:0 10px;border-radius:6px;font-size:12.5px;font-weight:600;cursor:pointer}
+.toast-btn:hover{background:rgba(255,255,255,.22)}
+
+/* ---------- mobile */
+.mcards{display:flex;flex-direction:column;gap:8px}
+.fc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;cursor:pointer}
+.fab{display:none}
+@media (max-width:900px){
+  .side{display:none}
+  .main{padding:0 12px 96px}
+  .mobile-top{display:flex;align-items:center;gap:8px;padding:10px 0 4px}
+  .tabbar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:40;padding-bottom:env(safe-area-inset-bottom)}
+  .tabbar a{flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:56px;font-size:11px;font-weight:500;color:var(--text-3)}
+  .tabbar a.active{color:var(--accent-text);font-weight:600}
+  .fab{display:inline-flex;position:fixed;bottom:76px;left:16px;height:52px;padding:0 18px 0 16px;border-radius:16px;border:0;background:var(--accent);color:var(--accent-fg);font-size:15px;font-weight:600;align-items:center;gap:8px;box-shadow:var(--shadow);cursor:pointer;z-index:39}
+  .page-h{padding-top:8px}
+  .hide-m{display:none !important}
+  .cols2,.grid3{grid-template-columns:minmax(0,1fr)}
+  .qa{padding-top:8px}
+  .qa h1{font-size:22px}
+  .qa-form{padding:16px}
+  .fc .pill{height:36px;padding:0 14px;font-size:14px}
+  .fc .quick-done{height:36px;padding:0 12px;font-size:13.5px;color:var(--st-resolved-fg);border-color:var(--st-resolved-dot)}
+  .menu-item{min-height:46px;font-size:15px;padding:0 12px}
+  .menu{min-width:230px}
+  .kanban{grid-template-columns:minmax(0,1fr)}
+  .kcol{min-height:0}
+  .grid3>*{grid-column:auto !important}
+}
+@media (min-width:901px){ .show-m{display:none !important} }
+@media (max-width:560px){ .grid2{grid-template-columns:minmax(0,1fr)} .drawer-b{padding:14px} }
+@media (prefers-reduced-motion: reduce){ .sk{animation:none} *{transition:none !important} }
+
+</style>
+<script>
+  var API_URL = "https://script.google.com/macros/s/AKfycbx6ZImPz6HwVlIPxW0--R0_s8Ez_g0Bbdws57-Z8r7jyWtv48gUankrQHK7GLTRqbEe0g/exec";
+  window.INIT = { invite: '', f: (new URLSearchParams(location.search).get('f') || ''), appUrl: location.origin + location.pathname };
+  try { var t = localStorage.getItem('pt_theme'); if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.classList.add('dark'); } catch (e) {}
+</script>
+</head>
+<body>
+<div id="app"><div class="boot">טוען…</div></div>
+<div id="toast-root"></div>
+<script>
+/* מעקב ממצאי פיילוט — לקוח (vanilla JS, ללא build) */
+(function () {
+  'use strict';
+
+  // ------------------------------------------------------------------ utils
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function dayKey(d) { d = new Date(d); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function today() { return dayKey(new Date()); }
+  function addDays(k, n) { var d = new Date(k + 'T12:00:00'); d.setDate(d.getDate() + n); return dayKey(d); }
+  function ddmm(k) { return k ? k.slice(8, 10) + '/' + k.slice(5, 7) : ''; }
+  function ddmmyyyy(k) { return k ? k.slice(8, 10) + '/' + k.slice(5, 7) + '/' + k.slice(0, 4) : ''; }
+  function hm(iso) { var d = new Date(iso); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+  function endOfDay(k) { return new Date(k + 'T23:59:59.999').getTime(); }
+  function fmtOpen(iso) { var k = dayKey(iso); return k === today() ? 'היום' : k === addDays(today(), -1) ? 'אתמול' : ddmm(k); }
+  function fmtWhen(iso) { var k = dayKey(iso); var p = k === today() ? 'היום' : k === addDays(today(), -1) ? 'אתמול' : ddmm(k); return p + ' ' + hm(iso); }
+  function fmtDue(k) { if (!k) return '—'; if (k === today()) return 'היום'; if (k === addDays(today(), 1)) return 'מחר'; return ddmm(k); }
+  var WEEKDAYS = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];
+  function weekday(k) { return 'יום ' + WEEKDAYS[new Date(k + 'T12:00:00').getDay()]; }
+  function lsGet(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* ignore */ } }
+  function ini(name) { var p = String(name || '?').trim().split(/\s+/); return (p[0] ? p[0][0] : '') + (p[1] ? p[1][0] : ''); }
+
+  // ------------------------------------------------------------------ constants
+  var ST = [['open', 'פתוח'], ['progress', 'בטיפול'], ['feedback', 'ממתין למשוב'], ['resolved', 'טופל'], ['closed', 'נסגר'], ['irrelevant', 'לא רלוונטי']];
+  var SEV = [['critical', 'קריטי'], ['high', 'גבוה'], ['medium', 'בינוני'], ['low', 'נמוך']];
+  var TYPES = [['bug', 'באג'], ['gap', 'חוסר בפיתוח'], ['improvement', 'שיפור'], ['question', 'שאלה / הדרכה'], ['data', 'נתונים']];
+  var ROLES = [['implementer', 'מיישם/ת'], ['developer', 'מפתח/ת'], ['pm', 'מנהל/ת פרויקט'], ['customer', 'לקוח'], ['other', 'אחר']];
+  var OPEN = ['open', 'progress', 'feedback'];
+  var DONE = ['resolved', 'closed'];
+  var FIELD_HE = { title: 'כותרת', description: 'תיאור', module: 'מודול', screen: 'מסך', type: 'סוג', severity: 'חומרה', status: 'סטטוס', assigneeId: 'מטפל', ownerId: 'אחראי', dueDate: 'תאריך יעד', resolution: 'פתרון / הערות טיפול', improvement: 'הצעה לשיפור', steps: 'צעדים לשחזור' };
+  function lbl(arr, k) { for (var i = 0; i < arr.length; i++) if (arr[i][0] === k) return arr[i][1]; return k || ''; }
+  function ord(arr, k) { for (var i = 0; i < arr.length; i++) if (arr[i][0] === k) return i; return 99; }
+
+  // ------------------------------------------------------------------ icons
+  function svg(d, size, sw, extra) { return '<svg width="' + (size || 16) + '" height="' + (size || 16) + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.8) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + (extra || '') + '>' + d + '</svg>'; }
+  var I = {
+    flag: function (s) { return svg('<path d="M19 21V4"></path><path d="M19 4H8l2 4-2 4h11"></path>', s || 18, 2.2); },
+    plus: function (s, w) { return svg('<path d="M12 5v14M5 12h14"></path>', s || 16, w || 2.2); },
+    search: function (s) { return svg('<circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>', s || 15, 2); },
+    chev: function (s) { return svg('<path d="m6 9 6 6 6-6"></path>', s || 12, 2.2, ' class="chev"'); },
+    check: function (s) { return svg('<path d="M20 6 9 17l-5-5"></path>', s || 14, 2.4); },
+    x: function (s) { return svg('<path d="M18 6 6 18M6 6l12 12"></path>', s || 14, 2.2); },
+    sun: function () { return svg('<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"></path>'); },
+    moon: function () { return svg('<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>'); },
+    pen: function (s) { return svg('<path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>', s || 16); },
+    list: function (s) { return svg('<path d="M3 6h13M3 12h13M3 18h13M21 6h.01M21 12h.01M21 18h.01"></path>', s || 16); },
+    chart: function (s) { return svg('<path d="M21 3v18H3"></path><path d="M17 15v3M12 10v8M7 6v12"></path>', s || 16); },
+    user: function (s) { return svg('<circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-6 8-6s8 2 8 6"></path>', s || 16); },
+    gear: function (s) { return svg('<circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path>', s || 16); },
+    cal: function (s) { return svg('<rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path>', s || 13, 2); },
+    warn: function (s) { return svg('<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path>', s || 14, 2); },
+    clip: function (s) { return svg('<path d="m21 11-8.6 8.6a5 5 0 0 1-7.1-7.1l8.6-8.6a3.5 3.5 0 0 1 5 5l-8.6 8.6a2 2 0 0 1-2.8-2.8l7.9-7.9"></path>', s || 13); },
+    comment: function (s) { return svg('<path d="M3 12a8 8 0 0 0 11.6 7.1L20 21l-1.9-5.4A8 8 0 1 0 3 12z"></path>', s || 13); },
+    refresh: function (s) { return svg('<path d="M21 12a9 9 0 0 1-15.5 6.3L3 16M3 12a9 9 0 0 1 15.5-6.3L21 8"></path><path d="M21 3v5h-5M3 21v-5h5"></path>', s || 14, 2); },
+    okc: function (s) { return svg('<circle cx="12" cy="12" r="9"></circle><path d="m8.5 12 2.5 2.5 4.5-5"></path>', s || 14, 2); },
+    image: function (s) { return svg('<rect x="3" y="5" width="18" height="15" rx="2"></rect><circle cx="9" cy="11" r="2"></circle><path d="m21 17-5-5-8 8"></path>', s || 18); },
+    logout: function (s) { return svg('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5M21 12H9"></path>', s || 16); },
+    copy: function (s) { return svg('<rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15V5a2 2 0 0 1 2-2h10"></path>', s || 15); },
+    download: function (s) { return svg('<path d="M12 3v12M7 10l5 5 5-5M5 21h14"></path>', s || 15); },
+    trash: function (s) { return svg('<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path>', s || 15); },
+    prev: function (s) { return svg('<path d="m9 18 6-6-6-6"></path>', s || 16, 2); },
+    next: function (s) { return svg('<path d="m15 18-6-6 6-6"></path>', s || 16, 2); },
+    filter: function (s) { return svg('<path d="M3 5h18l-7 8v6l-4 2v-8z"></path>', s || 18); },
+    cols: function (s) { return svg('<rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M9 4v16M15 4v16"></path>', s || 15); },
+    sparkle: function (s) { return svg('<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"></path>', s || 20); },
+    type: {
+      bug: function () { return svg('<path d="M9 7a3 3 0 0 1 6 0"></path><rect x="7" y="7" width="10" height="13" rx="5"></rect><path d="M12 11v9M3 13h4M17 13h4M4 7l3 2M20 7l-3 2M4 20l3-2M20 20l-3-2"></path>', 14); },
+      gap: function () { return svg('<rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke-dasharray="3 2.6"></rect><path d="M12 8.5v7M8.5 12h7"></path>', 14); },
+      improvement: function () { return svg('<circle cx="12" cy="12" r="9"></circle><path d="M12 16V8M8.5 11.5 12 8l3.5 3.5"></path>', 14); },
+      question: function () { return svg('<circle cx="12" cy="12" r="9"></circle><path d="M9.6 9.2a2.5 2.5 0 0 1 4.8 1c0 1.6-2.4 2-2.4 3.5"></path><path d="M12 17h.01"></path>', 14); },
+      data: function () { return svg('<ellipse cx="12" cy="5.5" rx="7.5" ry="2.5"></ellipse><path d="M4.5 5.5v13c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-13"></path><path d="M4.5 12c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5"></path>', 14); }
+    }
+  };
+  function sevHtml(sev) {
+    if (sev === 'critical') return '<span class="sev-crit"><svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="1" width="12" height="12" rx="3" fill="currentColor"></rect><path d="M7 4v3.6M7 10h.01" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round"></path></svg>קריטי</span>';
+    return '<span class="sev sev-' + sev + '"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect class="b1" x="10" y="8" width="3" height="5" rx="1"></rect><rect class="b2" x="5.5" y="5" width="3" height="8" rx="1"></rect><rect class="b3" x="1" y="2" width="3" height="11" rx="1"></rect></svg>' + esc(lbl(SEV, sev)) + '</span>';
+  }
+  function stPill(st, asButton, attrs) {
+    var inner = '<span class="dot d-' + st + '"></span>' + esc(lbl(ST, st));
+    if (asButton) return '<button class="pill st-' + st + '" ' + (attrs || '') + '>' + inner + I.chev() + '</button>';
+    return '<span class="pill st-' + st + '">' + inner + '</span>';
+  }
+
+  // ------------------------------------------------------------------ state
+  var DEFAULT_COLS = { module: true, type: true, severity: true, owner: true, reporter: false, opened: false, due: true };
+  function emptyF() { return { status: [], severity: [], assignee: [], owner: [], reporter: [], module: [], type: [], date: null }; }
+  var VIEWS = [
+    { id: 'open', label: 'כל הפתוחים', f: { status: OPEN } },
+    { id: 'mine', label: 'הפתוחים שלי', f: { status: OPEN }, mine: true },
+    { id: 'critical', label: 'קריטיים פתוחים', f: { status: OPEN, severity: ['critical'] } },
+    { id: 'today', label: 'נפתחו היום', f: { date: 'today' } },
+    { id: 'overdue', label: 'באיחור', f: { date: 'overdue' } },
+    { id: 'all', label: 'כל הממצאים', f: {} }
+  ];
+  function viewF(v) { var f = emptyF(); Object.keys(v.f || {}).forEach(function (k) { f[k] = Array.isArray(v.f[k]) ? v.f[k].slice() : v.f[k]; }); return f; }
+
+  var S = {
+    phase: 'boot', // boot | setup | login | invite | app
+    status: null, me: null, users: [], modules: [], settings: {}, sync: {}, version: 0, findings: [],
+    route: 'add',
+    list: { view: 'open', f: viewF(VIEWS[0]), mine: false, q: '', sortKey: 'id', sortDir: 'desc', dirty: false, cols: Object.assign({}, DEFAULT_COLS, lsGet('pt_cols', {})) },
+    customViews: lsGet('pt_views', []),
+    menu: null,
+    drawer: null,
+    modal: null,
+    qa: { text: lsGet('pt_draft', ''), module: null, severity: 'medium', type: 'bug', screen: '', steps: '', assigneeId: '', dueDate: '', files: [], last: null, busy: false },
+    summary: { date: today(), hover: null },
+    mine: { mode: 'assignee' },
+    inviteToken: null, invite: null,
+    authErr: null,
+    adminMsg: null, lastInvite: null
+  };
+
+  // ------------------------------------------------------------------ api
+  function getName() { try { return localStorage.getItem('pt_name') || ''; } catch (e) { return S.memName || ''; } }
+  function setName(n) { S.memName = n; try { if (n) localStorage.setItem('pt_name', n); else localStorage.removeItem('pt_name'); } catch (e) { /* */ } }
+  function goLogin(msg) { setName(''); S.phase = 'login'; S.me = null; S.authErr = msg || null; render(); }
+  var INIT = window.INIT || { invite: '', f: '', appUrl: '' };
+  function getToken() { try { return localStorage.getItem('pt_token') || ''; } catch (e) { return S.memToken || ''; } }
+  function setToken(t) { S.memToken = t; try { if (t) localStorage.setItem('pt_token', t); else localStorage.removeItem('pt_token'); } catch (e) { /* */ } }
+  // one call to the script; on a network/Google hiccup or a busy lock it retries automatically (up to 3 tries)
+  function callOnce(payload) {
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 45000) : null;
+    return fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: payload, redirect: 'follow', credentials: 'omit', cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      .catch(function () { var err = new Error('אין חיבור לשרת. בדקו את האינטרנט ונסו שוב.'); err.retry = true; throw err; })
+      .then(function (res) {
+        if (timer) clearTimeout(timer);
+        if (!res.ok) { var err = new Error('השרת לא זמין כרגע (' + res.status + ')'); err.retry = res.status >= 500 || res.status === 429; throw err; }
+        return res.text();
+      })
+      .then(function (txt) {
+        var r;
+        try { r = JSON.parse(txt); } catch (e) { var err = new Error('תשובה לא צפויה מהשרת. נסו שוב.'); err.retry = true; throw err; }
+        var msg = (r.body && r.body.error) || '';
+        if (r.status === 500 && /lock|timed out|too many|Service|Exceeded/i.test(msg)) { var err2 = new Error(msg); err2.retry = true; throw err2; }
+        return r;
+      });
+  }
+  function callWithRetry(payload, tries) {
+    return callOnce(payload).catch(function (e) {
+      if (!e.retry || tries <= 1) throw e;
+      return new Promise(function (res) { setTimeout(res, tries === 3 ? 1200 : 3000); }).then(function () { return callWithRetry(payload, tries - 1); });
+    });
+  }
+  function api(method, url, body) {
+    var payload = JSON.stringify({ method: method, path: url, body: body || null, token: getToken(), name: getName() });
+    return callWithRetry(payload, 3).then(function (r) {
+      if (r.token) setToken(r.token);
+      if ((r.status === 401 || r.status === 403) && S.phase === 'app') { setToken(''); goLogin(r.body && r.body.error); }
+      if (r.status !== 200) throw new Error((r.body && r.body.error) || ('שגיאה ' + r.status));
+      return r.body;
+    });
+  }
+  function applyBoot(j) {
+    S.me = j.me; S.users = j.users; S.modules = j.modules; S.settings = j.settings; S.sync = j.sync; S.version = j.version; S.findings = j.findings;
+    S.phase = 'app';
+    document.title = (S.settings.projectName || 'ממצאי פיילוט') + (S.settings.clientName ? ' · ' + S.settings.clientName : '');
+  }
+  function bootstrap() { return api('GET', '/api/bootstrap').then(function (j) { applyBoot(j); lsSet('pt_cache', j); }); }
+  // Open the app immediately (no waiting for the server): show the last data saved on this device,
+  // or an empty screen for a first visit, and refresh from the server in the background.
+  var DEFAULT_MODULES = ['מכירות', 'רכש', 'ייצור', 'מלאי', 'כספים', 'לוגיסטיקה', 'אחר'].map(function (n) { return { name: n, defaultAssigneeId: null }; });
+  function sameName(a, b) { return String(a || '').replace(/\s+/g, ' ').trim().toLowerCase() === String(b || '').replace(/\s+/g, ' ').trim().toLowerCase(); }
+  function openAppNow() {
+    var c = lsGet('pt_cache', null);
+    if (c && c.me && sameName(c.me.name, getName())) applyBoot(c);
+    else {
+      var me = { id: -1, name: getName(), role: 'implementer', isAdmin: false, active: true, color: '#5B6475' };
+      S.me = me;
+      S.users = c && c.users ? c.users : [me];
+      S.modules = c && c.modules ? c.modules : DEFAULT_MODULES;
+      S.settings = c && c.settings ? c.settings : { projectName: 'ממצאי פיילוט' };
+      S.findings = c && c.findings ? c.findings : [];
+      S.sync = {}; S.version = 0; S.phase = 'app';
+    }
+    S.loading = true;
+    render();
+    bootstrap().then(function () { S.loading = false; render(); }).catch(function (e) {
+      S.loading = false;
+      if (S.phase === 'app') { render(); toast('לא הצלחנו לרענן את הנתונים: ' + e.message, null, true); }
+    });
+  }
+  // a login/setup/status reply may already carry the full data (saves a round-trip)
+  function bootFrom(j) { if (j && j.boot) { applyBoot(j.boot); return Promise.resolve(); } return bootstrap(); }
+  function upsert(f, version) {
+    var i = S.findings.findIndex(function (x) { return x.id === f.id; });
+    if (i >= 0) S.findings[i] = f; else S.findings.push(f);
+    if (version) S.version = version;
+  }
+  function patchFinding(id, patch, msg, undoable) {
+    var f = byId(id);
+    var before = {};
+    Object.keys(patch).forEach(function (k) { before[k] = f ? f[k] : null; });
+    // optimistic: show the change immediately, then confirm with the server
+    var snapshot = f ? JSON.parse(JSON.stringify(f)) : null;
+    if (f) { Object.keys(patch).forEach(function (k) { f[k] = patch[k]; }); }
+    S.menu = null;
+    render();
+    if (msg) toast(msg, undoable ? function () { patchFinding(id, before, 'השינוי בוטל'); } : null);
+    return api('PATCH', '/api/findings/' + id, patch).then(function (j) {
+      upsert(j.finding, j.version);
+      render();
+    }).catch(function (e) {
+      if (snapshot) upsert(snapshot);
+      render();
+      toast('השינוי לא נשמר: ' + e.message, null, true);
+    });
+  }
+
+  // ------------------------------------------------------------------ data helpers
+  function byId(id) { id = Number(id); for (var i = 0; i < S.findings.length; i++) if (S.findings[i].id === id) return S.findings[i]; return null; }
+  function user(id) { if (id == null) return null; for (var i = 0; i < S.users.length; i++) if (S.users[i].id === Number(id)) return S.users[i]; return null; }
+  function uname(id) { var u = user(id); return u ? u.name : ''; }
+  function activeUsers() { return S.users.filter(function (u) { return u.active; }); }
+  function av(u, cls) {
+    if (!u) return '<span class="av av-empty ' + (cls || '') + '" aria-hidden="true"></span>';
+    return '<span class="av ' + (cls || '') + '" style="background:' + esc(u.color || '#5B6475') + '" title="' + esc(u.name) + '">' + esc(ini(u.name)) + '</span>';
+  }
+  function moduleNames() {
+    var names = S.modules.map(function (m) { return m.name; });
+    S.findings.forEach(function (f) { if (f.module && names.indexOf(f.module) < 0) names.push(f.module); });
+    return names;
+  }
+  function canDel(f) { return !!S.me && (S.me.isAdmin || f.reporterId === S.me.id); }
+  function isMine(f) { var me = S.me.id; return f.assigneeId === me || f.reporterId === me; }
+  function isOverdue(f, k) { k = k || today(); return OPEN.indexOf(f.status) >= 0 && f.dueDate && f.dueDate < k; }
+  function dueCls(f) { if (OPEN.indexOf(f.status) < 0 || !f.dueDate) return 'due'; if (f.dueDate < today()) return 'due over'; if (f.dueDate === today()) return 'due today'; return 'due'; }
+  function statusAt(f, k) {
+    var end = endOfDay(k);
+    if (new Date(f.createdAt).getTime() > end) return null;
+    var st = 'open';
+    (f.history || []).forEach(function (h) { if (h.field === 'status' && new Date(h.at).getTime() <= end) st = h.to; });
+    return st;
+  }
+
+  // ------------------------------------------------------------------ toast
+  function toast(text, undo, isErr) {
+    var root = $('#toast-root');
+    var el = document.createElement('div');
+    el.className = 'toast' + (isErr ? ' err' : '');
+    el.setAttribute('role', 'status');
+    el.innerHTML = (isErr ? I.warn(16) : '<span style="color:#5FD38F;display:inline-flex">' + I.check(16) + '</span>') + '<span class="truncate">' + esc(text) + '</span>' + (undo ? '<button class="toast-btn">ביטול</button>' : '');
+    if (undo) el.querySelector('button').addEventListener('click', function () { el.remove(); undo(); });
+    root.appendChild(el);
+    setTimeout(function () { el.remove(); }, isErr ? 6000 : 4500);
+  }
+
+  // ------------------------------------------------------------------ routing
+  function parseRoute() {
+    var h = location.hash.replace(/^#\/?/, '');
+    var m = /^invite\/(.+)$/.exec(h);
+    if (m) { S.inviteToken = decodeURIComponent(m[1]); return 'invite'; }
+    m = /^f\/(\d+)$/.exec(h);
+    if (m) { S.drawer = Number(m[1]); return 'list'; }
+    if (['add', 'list', 'summary', 'mine', 'settings'].indexOf(h) >= 0) return h;
+    return 'add';
+  }
+  window.addEventListener('hashchange', function () {
+    var r = parseRoute();
+    if (r === 'invite') { start(); return; }
+    S.route = r; S.menu = null; render(); window.scrollTo(0, 0);
+  });
+
+  // ------------------------------------------------------------------ render core
+  function render() {
+    var ae = document.activeElement;
+    var fid = ae && ae.id;
+    var sel = null;
+    if (fid && typeof ae.selectionStart === 'number') { try { sel = [ae.selectionStart, ae.selectionEnd]; } catch (e) { /* */ } }
+    var scrolls = $$('[data-keep-scroll]').map(function (e) { return [e.getAttribute('data-keep-scroll'), e.scrollTop, e.scrollLeft]; });
+    var wy = window.scrollY;
+    var html;
+    if (S.phase === 'boot') html = '<div class="boot">טוען…</div>';
+    else if (S.phase === 'setup') html = viewSetup();
+    else if (S.phase === 'login') {
+      html = viewLogin();
+      var stale = !S.status || !S.status.names;
+      if (stale && !S.namesLoading) { // load the list of names for the quick buttons (background)
+        S.namesLoading = true;
+        api('GET', '/api/status').then(function (st) { S.status = st; S.namesLoading = false; if (S.phase === 'login') render(); }).catch(function () { S.namesLoading = false; });
+      }
+    }
+    else if (S.phase === 'invite') html = viewInvite();
+    else html = viewApp();
+    $('#app').innerHTML = html;
+    if (fid) { var el = document.getElementById(fid); if (el) { try { el.focus({ preventScroll: true }); if (sel && el.setSelectionRange) el.setSelectionRange(sel[0], sel[1]); } catch (e) { /* */ } } }
+    S.menuAt = S.menu ? Math.max(S.menuAt || 0, Date.now()) : 0;
+    scrolls.forEach(function (s) { var e = $('[data-keep-scroll="' + s[0] + '"]'); if (e) { e.scrollTop = s[1]; e.scrollLeft = s[2]; } });
+    window.scrollTo(0, wy);
+    if (S.drawer) loadThumbs();
+  }
+
+  function themeBtn() {
+    var dark = document.documentElement.classList.contains('dark');
+    return '<button class="btn icon" data-a="theme" aria-label="' + (dark ? 'מעבר למצב בהיר' : 'מעבר למצב כהה') + '">' + (dark ? I.sun() : I.moon()) + '</button>';
+  }
+
+  function syncIndicator() {
+    if (S.loading) return '<span class="sync" role="status">' + I.refresh(14) + 'מעדכן נתונים…</span>';
+    return '<span class="sync" role="status" title="הנתונים נשמרים ישירות בגיליון Google"><span style="color:var(--ok);display:inline-flex">' + I.okc(15) + '</span>נשמר ב-Google Sheets</span>';
+  }
+
+  function pilotCard() {
+    var s = S.settings;
+    if (!s.pilotStart) return '';
+    var start = new Date(s.pilotStart + 'T12:00:00');
+    var day = Math.max(1, Math.floor((new Date(today() + 'T12:00:00') - start) / 86400000) + 1);
+    var total = s.goLive ? Math.max(day, Math.floor((new Date(s.goLive + 'T12:00:00') - start) / 86400000) + 1) : 0;
+    var pct = total ? Math.min(100, Math.round(day / total * 100)) : 0;
+    return '<div class="pilot-card"><div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px"><span style="font-weight:600">יום ' + day + ' בפיילוט</span>' + (total ? '<span class="muted">מתוך ' + total + '</span>' : '') + '</div>' +
+      (total ? '<div class="progress" role="progressbar" aria-label="התקדמות הפיילוט" aria-valuemin="0" aria-valuemax="' + total + '" aria-valuenow="' + day + '"><div style="width:' + pct + '%"></div></div>' : '') +
+      (s.goLive ? '<span style="font-size:12px" class="muted">עלייה לאוויר: ' + weekday(s.goLive) + ', ' + ddmm(s.goLive) + '</span>' : '') + '</div>';
+  }
+
+  function viewApp() {
+    var r = S.route;
+    var openCount = S.findings.filter(function (f) { return OPEN.indexOf(f.status) >= 0 && isMine(f); }).length;
+    var mineCount = S.findings.filter(function (f) { return OPEN.indexOf(f.status) >= 0 && f.assigneeId === S.me.id; }).length;
+    var navItems = [
+      ['add', 'רישום ממצא', I.pen(), ''],
+      ['list', 'ממצאים', I.list(), openCount ? '<span class="count">' + openCount + '</span>' : ''],
+      ['summary', 'סיכום יומי', I.chart(), ''],
+      ['mine', 'המשימות שלי', I.user(), mineCount ? '<span class="count">' + mineCount + '</span>' : ''],
+      ['settings', S.me.isAdmin ? 'הגדרות' : 'החשבון שלי', I.gear(), S.me.isAdmin ? '<span class="tagm">מנהל</span>' : '']
+    ];
+    var side = '<aside class="side" aria-label="ניווט ראשי">' +
+      '<div class="brand"><div class="logo" aria-hidden="true">' + I.flag() + '</div><div style="min-width:0;display:flex;flex-direction:column"><span class="brand-t truncate">' + esc(S.settings.projectName || 'ממצאי פיילוט') + '</span><span class="brand-s truncate">' + esc(S.settings.clientName ? S.settings.clientName + ' · Priority' : 'Priority') + '</span></div></div>' +
+      pilotCard() +
+      '<nav class="nav">' + navItems.map(function (n) { return '<a href="#/' + n[0] + '" class="' + (r === n[0] ? 'active' : '') + '"' + (r === n[0] ? ' aria-current="page"' : '') + '>' + n[2] + '<span style="flex:1">' + n[1] + '</span>' + n[3] + '</a>'; }).join('') + '</nav>' +
+      '<div class="side-user">' + av(S.me, 'av-lg') + '<div style="display:flex;flex-direction:column;min-width:0;flex:1"><span style="font-weight:600;font-size:13px" class="truncate">' + esc(S.me.name) + '</span><span class="truncate muted" style="font-size:12px">' + esc(lbl(ROLES, S.me.role)) + (S.me.isAdmin ? ' · מנהל מערכת' : '') + '</span></div><button class="btn icon" data-a="logout" aria-label="התנתקות" title="התנתקות">' + I.logout() + '</button></div>' +
+      '</aside>';
+    var mobileTop = '<div class="mobile-top"><div class="logo" aria-hidden="true" style="width:30px;height:30px">' + I.flag(16) + '</div><div style="flex:1;min-width:0;display:flex;flex-direction:column"><strong class="truncate" style="font-size:15px">' + esc(S.settings.projectName || 'ממצאי פיילוט') + '</strong>' + syncIndicator() + '</div>' + themeBtn() + av(S.me, 'av-lg') + '</div>';
+    var content = r === 'list' ? viewList() : r === 'summary' ? viewSummary() : r === 'mine' ? viewMine() : r === 'settings' ? viewSettings() : viewAdd();
+    var tabbar = '<nav class="tabbar" aria-label="ניווט">' + [['add', 'רישום', I.pen(22)], ['list', 'ממצאים', I.list(22)], ['summary', 'סיכום', I.chart(22)], ['mine', 'שלי', I.user(22)], ['settings', 'עוד', I.gear(22)]].map(function (n) {
+      return '<a href="#/' + n[0] + '" class="' + (r === n[0] ? 'active' : '') + '">' + n[2] + n[1] + '</a>';
+    }).join('') + '</nav>';
+    var fab = r !== 'add' ? '<a class="fab" href="#/add">' + I.plus(20, 2.4) + 'ממצא חדש</a>' : '';
+    var backdrop = S.menu ? '<button class="backdrop" data-a="closeMenus" aria-label="סגירת התפריט"></button>' : '';
+    return '<div class="shell">' + backdrop + side + '<main class="main">' + mobileTop + content + '</main></div>' + rowMenu() + tabbar + fab + (S.drawer ? viewDrawer() : '') + (S.modal ? viewModal() : '');
+  }
+
+  // ------------------------------------------------------------------ page: quick add
+  function routeFor(mod) {
+    var m = S.modules.find(function (x) { return x.name === mod; });
+    return m && m.defaultAssigneeId ? user(m.defaultAssigneeId) : null;
+  }
+  function qaHint() {
+    var q = S.qa, t = q.text.trim();
+    if (!t && !q.module) return 'כתבו את הבעיה ובחרו למה היא קשורה';
+    if (!t) return 'נשאר לכתוב את הבעיה';
+    if (!q.module) return 'נשאר לבחור למה זה קשור';
+    return 'אפשר גם Ctrl+Enter';
+  }
+  function viewAdd() {
+    var q = S.qa;
+    var success = q.last ? '<div class="success" role="status">' + I.okc(22) + '<span style="flex:1;font-size:15px;font-weight:600">ממצא #' + q.last.id + ' נשמר</span><button class="linkbtn" data-a="qaUndo">ביטול</button><button class="linkbtn" data-a="open" data-id="' + q.last.id + '">פתיחה</button></div>' : '';
+    return '<div class="page-h hide-m"><div class="grow"></div>' + syncIndicator() + themeBtn() + '</div>' +
+      '<div class="qa">' +
+      '<h1>מה מצאת?</h1>' +
+      success +
+      '<form class="qa-form" data-form="qa" novalidate>' +
+      '<label for="qa-text" class="sr">הבעיה או הממצא</label>' +
+      '<textarea id="qa-text" class="ta" data-i="qaText" placeholder="כתבו כאן את הבעיה או הממצא…">' + esc(q.text) + '</textarea>' +
+      (q.files.length ? '<div class="thumbs">' + q.files.map(function (f, i) { return '<div class="thumb">' + (/^image\//.test(f.type) ? '<img src="' + f.data + '" alt="">' : esc(f.name)) + '<button type="button" class="x" data-a="qaRemoveFile" data-i="' + i + '" aria-label="הסרת קובץ">' + I.x(12) + '</button></div>'; }).join('') + '</div>' : '') +
+      '<fieldset style="border:0;padding:0;margin:0"><legend class="lab" style="padding:0;margin-bottom:10px">למה זה קשור? <small>לא חובה</small></legend><div style="display:flex;flex-wrap:wrap;gap:8px">' +
+      S.modules.map(function (m) { var on = q.module === m.name; return '<button type="button" class="mchip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-a="qaModule" data-v="' + esc(m.name) + '">' + (on ? I.check(15) : '') + esc(m.name) + '</button>'; }).join('') +
+      '</div></fieldset>' +
+      '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px"><button type="submit" id="qa-add" class="addbtn"' + (!q.text.trim() || q.busy ? ' disabled' : '') + '>' + I.plus(20, 2.6) + (q.busy ? 'שומר…' : 'הוסף ממצא') + '</button>' +
+      '<button type="button" class="ghost" data-a="pickFile" data-target="qa">' + I.image() + 'צילום מסך</button></div>' +
+      '</form></div>';
+  }
+
+  // ------------------------------------------------------------------ page: list
+  var FILTERS = [
+    { k: 'status', label: 'סטטוס', opts: function () { return ST.map(function (s) { return { v: s[0], l: s[1], dot: 'd-' + s[0] }; }); } },
+    { k: 'severity', label: 'חומרה', opts: function () { return SEV.map(function (s) { return { v: s[0], l: s[1], dot: 'd-' + s[0] }; }); } },
+    { k: 'assignee', label: 'מטפל', opts: function () { return [{ v: 'none', l: 'לא שויך' }].concat(activeUsers().map(function (u) { return { v: String(u.id), l: u.name, u: u }; })); } },
+    { k: 'owner', label: 'אחראי', noMobile: true, opts: function () { return activeUsers().map(function (u) { return { v: String(u.id), l: u.name, u: u }; }); } },
+    { k: 'reporter', label: 'נרשם ע״י', noMobile: true, opts: function () { return S.users.map(function (u) { return { v: String(u.id), l: u.name, u: u }; }); } },
+    { k: 'module', label: 'מודול', opts: function () { return moduleNames().map(function (m) { return { v: m, l: m }; }); } },
+    { k: 'type', label: 'סוג', noMobile: true, opts: function () { return TYPES.map(function (t) { return { v: t[0], l: t[1] }; }); } },
+    { k: 'date', label: 'תאריך', single: true, opts: function () { return [{ v: 'today', l: 'נפתחו היום' }, { v: 'yesterday', l: 'נפתחו אתמול' }, { v: 'week', l: 'נפתחו ב-7 ימים אחרונים' }, { v: 'overdue', l: 'באיחור (עבר תאריך היעד)' }, { v: 'duesoon', l: 'יעד ב-3 ימים הקרובים' }, { v: 'nodue', l: 'ללא תאריך יעד' }]; } }
+  ];
+  function fval(f, k) {
+    if (k === 'assignee') return f.assigneeId == null ? 'none' : String(f.assigneeId);
+    if (k === 'owner') return String(f.ownerId);
+    if (k === 'reporter') return String(f.reporterId);
+    return f[k];
+  }
+  function matchDate(f, d) {
+    var c = dayKey(f.createdAt), t = today();
+    if (d === 'today') return c === t;
+    if (d === 'yesterday') return c === addDays(t, -1);
+    if (d === 'week') return c >= addDays(t, -6);
+    if (d === 'overdue') return isOverdue(f);
+    if (d === 'duesoon') return OPEN.indexOf(f.status) >= 0 && f.dueDate && f.dueDate >= t && f.dueDate <= addDays(t, 3);
+    if (d === 'nodue') return !f.dueDate;
+    return true;
+  }
+  function applyList(fl, mine, q) {
+    q = (q || '').trim().toLowerCase();
+    return S.findings.filter(function (f) {
+      for (var i = 0; i < FILTERS.length; i++) {
+        var k = FILTERS[i].k;
+        if (k === 'date') { if (fl.date && !matchDate(f, fl.date)) return false; continue; }
+        if (fl[k] && fl[k].length && fl[k].indexOf(fval(f, k)) < 0) return false;
+      }
+      if (mine && !isMine(f)) return false;
+      if (q) {
+        var hay = ('#' + f.id + ' ' + f.id + ' ' + f.title + ' ' + (f.description || '') + ' ' + (f.screen || '') + ' ' + (f.module || '') + ' ' + (f.steps || '') + ' ' + uname(f.assigneeId)).toLowerCase();
+        if (hay.indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+  }
+  function sortList(rows) {
+    var k = S.list.sortKey, dir = S.list.sortDir === 'asc' ? 1 : -1;
+    var val = function (f) {
+      switch (k) {
+        case 'id': return f.id;
+        case 'title': return f.title;
+        case 'module': return (f.module || '') + ' ' + (f.screen || '');
+        case 'type': return ord(TYPES, f.type);
+        case 'severity': return ord(SEV, f.severity);
+        case 'status': return ord(ST, f.status);
+        case 'assignee': return uname(f.assigneeId) || 'ת';
+        case 'owner': return uname(f.ownerId);
+        case 'reporter': return uname(f.reporterId);
+        case 'opened': return f.createdAt;
+        case 'due': return f.dueDate || (dir > 0 ? '9999' : '0000');
+        default: return f.id;
+      }
+    };
+    return rows.slice().sort(function (a, b) {
+      var x = val(a), y = val(b);
+      var c = typeof x === 'number' ? x - y : String(x).localeCompare(String(y), 'he');
+      return c * dir || (b.id - a.id);
+    });
+  }
+  function allViews() { return VIEWS.concat(S.customViews.map(function (v) { return Object.assign({ custom: true }, v); })); }
+
+  function viewList() {
+    var L = S.list;
+    var scope = L.scope || 'mine';
+    L.mine = scope === 'mine'; L.f = emptyF(); L.dirty = false;
+    L.cols = { module: true, type: false, severity: false, owner: false, reporter: scope === 'all', opened: true, due: false };
+    var mineN = S.findings.filter(isMine).length;
+    var mineOpen = S.findings.filter(function (f) { return isMine(f) && OPEN.indexOf(f.status) >= 0; }).length;
+    var seg = function (v, label, n) { var on = scope === v; return '<button class="btn' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-a="scope" data-v="' + v + '">' + label + '<span class="count">' + n + '</span></button>'; };
+    return '<div class="page-h"><div class="grow"><h1>' + (scope === 'mine' ? 'הממצאים שלי' : 'כל הממצאים') + '</h1><span class="sub">' + (scope === 'mine' ? mineN + ' ממצאים שרשמת או שאת/ה מטפל/ת בהם · ' + mineOpen + ' פתוחים' : S.findings.length + ' ממצאים של כל הצוות') + '</span></div>' +
+      '<span class="hide-m">' + syncIndicator() + '</span>' +
+      (S.me.isAdmin ? '<button class="btn hide-m" data-a="exportCsv">' + I.download() + 'ייצוא ל-Excel</button>' : '') + '</div>' +
+      '<div class="toolbar">' + seg('mine', 'הממצאים שלי', mineN) + seg('all', 'של כולם', S.findings.length) +
+      '<div class="search"><label for="q" class="sr">חיפוש ממצאים</label>' + I.search() + '<input id="q" type="search" class="input" placeholder="חיפוש לפי מילה או מספר" value="' + esc(L.q) + '" data-i="q"></div></div>' +
+      '<div id="list-results">' + listResults() + '</div>';
+  }
+
+  function chipsHtml() {
+    var L = S.list, chips = [];
+    FILTERS.forEach(function (F) {
+      var cur = L.f[F.k];
+      if (F.single) { if (cur) chips.push([F.k, F.label, (F.opts().find(function (o) { return o.v === cur; }) || {}).l]); return; }
+      if (cur.length) {
+        var labels = cur.map(function (v) { var o = F.opts().find(function (x) { return x.v === v; }); return o ? o.l : v; });
+        chips.push([F.k, F.label, labels.length > 2 ? labels.slice(0, 2).join(', ') + ' +' + (labels.length - 2) : labels.join(', ')]);
+      }
+    });
+    if (!chips.length && !L.q) return '';
+    return '<div class="chips"><span style="font-size:12px;margin-inline-end:2px" class="muted">מסננים פעילים:</span>' + chips.map(function (c) {
+      return '<span class="chip"><span class="muted">' + esc(c[1]) + ':</span><span style="font-weight:500">' + esc(c[2]) + '</span><button class="chip-x" aria-label="הסרת המסנן ' + esc(c[1]) + '" data-a="clearFilter" data-k="' + c[0] + '">' + I.x(12) + '</button></span>';
+    }).join('') + (L.q ? '<span class="chip"><span class="muted">חיפוש:</span><span style="font-weight:500">' + esc(L.q) + '</span><button class="chip-x" aria-label="ניקוי החיפוש" data-a="clearFilter" data-k="_q">' + I.x(12) + '</button></span>' : '') +
+      '<button class="link-btn" data-a="clearAll">נקה הכל</button>' + (L.dirty ? '<button class="link-btn" data-a="saveView">שמור כתצוגה</button>' : '') + '</div>';
+  }
+
+  function listResults() {
+    var L = S.list, c = L.cols;
+    var rows = sortList(applyList(L.f, L.mine, L.q));
+    var W = { module: 150, type: 112, severity: 92, owner: 124, reporter: 124, opened: 66, due: 80 };
+    var minW = 56 + 240 + 132 + 140 + 40 + Object.keys(W).reduce(function (s, k) { return s + (c[k] ? W[k] : 0); }, 0);
+    var hdr = function (k, label, style) {
+      var act = L.sortKey === k;
+      return '<div role="columnheader" aria-sort="' + (act ? (L.sortDir === 'asc' ? 'ascending' : 'descending') : 'none') + '" style="' + style + '"><button class="th' + (act ? ' active' : '') + '" data-a="sort" data-v="' + k + '">' + label + '<span class="ind">' + (act ? (L.sortDir === 'asc' ? '↑' : '↓') : '') + '</span></button></div>';
+    };
+    var head = '<div role="row" class="thead">' + hdr('id', 'מס׳', 'flex:0 0 56px') + hdr('title', 'כותרת', 'flex:1 1 240px;min-width:0') +
+      (c.module ? hdr('module', 'מודול / מסך', 'flex:0 0 150px') : '') + (c.type ? hdr('type', 'סוג', 'flex:0 0 112px') : '') + (c.severity ? hdr('severity', 'חומרה', 'flex:0 0 92px') : '') +
+      hdr('status', 'סטטוס', 'flex:0 0 132px') + hdr('assignee', 'מטפל', 'flex:0 0 140px') + (c.owner ? hdr('owner', 'אחראי', 'flex:0 0 124px') : '') + (c.reporter ? hdr('reporter', 'נרשם ע״י', 'flex:0 0 124px') : '') +
+      (c.opened ? hdr('opened', 'נפתח', 'flex:0 0 66px') : '') + (c.due ? hdr('due', 'יעד', 'flex:0 0 80px') : '') + '<div style="flex:0 0 40px"></div></div>';
+    var n = rows.length;
+    var body = rows.map(function (f, idx) {
+      var a = user(f.assigneeId), o = user(f.ownerId), rp = user(f.reporterId);
+      var stOpen = S.menu === 'st-' + f.id, asOpen = S.menu === 'as-' + f.id;
+      var stMenu = '', asMenu = '';
+      var dim = OPEN.indexOf(f.status) < 0;
+      var meta = ((f.comments || []).length ? '<span class="meta" title="תגובות">' + I.comment() + f.comments.length + '</span>' : '') + ((f.attachments || []).length ? '<span class="meta" title="צרופות">' + I.clip() + f.attachments.length + '</span>' : '');
+      return '<div role="row" class="trow' + (dim ? ' dim' : '') + '" data-a="open" data-id="' + f.id + '">' +
+        '<div role="cell" class="c-id" style="flex:0 0 56px">#' + f.id + '</div>' +
+        '<div role="cell" style="flex:1 1 240px;min-width:0;display:flex;align-items:center;gap:10px;padding-inline-end:16px"><span class="truncate rt" style="font-weight:500;font-size:13.5px">' + esc(f.title) + '</span><span style="display:inline-flex;gap:8px;font-size:12px;flex:0 0 auto" class="muted">' + meta + '</span></div>' +
+        (c.module ? '<div role="cell" class="truncate" style="flex:0 0 150px;font-size:13px;color:var(--text-2);padding-inline-end:12px">' + esc(f.module || '—') + (f.screen ? ' <span class="muted">· ' + esc(f.screen) + '</span>' : '') + '</div>' : '') +
+        (c.type ? '<div role="cell" style="flex:0 0 112px;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-2);min-width:0"><span class="muted" style="display:inline-flex">' + (I.type[f.type] ? I.type[f.type]() : '') + '</span><span class="truncate">' + esc(lbl(TYPES, f.type)) + '</span></div>' : '') +
+        (c.severity ? '<div role="cell" style="flex:0 0 92px">' + sevHtml(f.severity) + '</div>' : '') +
+        '<div role="cell" class="dd" style="flex:0 0 132px">' + stPill(f.status, true, 'aria-haspopup="menu" aria-expanded="' + stOpen + '" aria-label="סטטוס: ' + lbl(ST, f.status) + ', לחצו לשינוי" data-a="menu" data-v="st-' + f.id + '"') + stMenu + '</div>' +
+        '<div role="cell" class="dd" style="flex:0 0 140px;min-width:0"><button class="cell-btn" aria-haspopup="menu" aria-expanded="' + asOpen + '" aria-label="מטפל: ' + esc(a ? a.name : 'לא שויך') + ', לחצו להעברה" data-a="menu" data-v="as-' + f.id + '">' + av(a) + '<span class="truncate' + (a ? '' : ' muted') + '">' + esc(a ? a.name : 'לא שויך') + '</span>' + I.chev() + '</button>' + asMenu + '</div>' +
+        (c.owner ? '<div role="cell" style="flex:0 0 124px;display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-2);min-width:0">' + av(o) + '<span class="truncate">' + esc(o ? o.name : '—') + '</span></div>' : '') +
+        (c.reporter ? '<div role="cell" style="flex:0 0 124px;display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-2);min-width:0">' + av(rp) + '<span class="truncate">' + esc(rp ? rp.name : '—') + '</span></div>' : '') +
+        (c.opened ? '<div role="cell" style="flex:0 0 66px;font-size:12.5px" class="muted">' + fmtOpen(f.createdAt) + '</div>' : '') +
+        (c.due ? '<div role="cell" style="flex:0 0 80px"><span class="' + dueCls(f) + '">' + (isOverdue(f) ? I.warn(12) : '') + fmtDue(f.dueDate) + (isOverdue(f) ? '<span class="sr">באיחור</span>' : '') + '</span></div>' : '') +
+        '<div role="cell" style="flex:0 0 40px;display:flex;justify-content:flex-end">' + (canDel(f) ? '<button class="btn icon row-del" data-a="delFinding" data-id="' + f.id + '" aria-label="מחיקת ממצא #' + f.id + '" title="מחיקה">' + I.trash(15) + '</button>' : '') + '</div>' +
+        '</div>';
+    }).join('');
+    var empty = !n ? (S.findings.length ?
+      '<div class="empty">' + I.search(28) + '<span style="font-weight:600;font-size:15px">אין ממצאים שתואמים לסינון</span><span class="muted" style="font-size:13px">נסו להסיר מסנן או לשנות את החיפוש.</span><button class="btn" data-a="clearAll" style="margin-top:6px">נקה את כל המסננים</button></div>' :
+      '<div class="empty"><div style="width:64px;height:64px;border-radius:18px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--ok)">' + I.okc(30) + '</div><span style="font-weight:700;font-size:18px">עוד אין ממצאים</span><span class="muted" style="font-size:13.5px">ממצא חדש שיירשם יופיע כאן.</span><a class="btn primary" href="#/add">' + I.plus() + 'ממצא חדש</a></div>') : '';
+    var cards = rows.map(function (f) {
+      var a = user(f.assigneeId);
+      var quickDone = OPEN.indexOf(f.status) >= 0 ? '<button class="btn sm quick-done" data-a="setStatus" data-id="' + f.id + '" data-v="resolved" aria-label="סימון #' + f.id + ' כטופל">' + I.check(14) + 'טופל</button>' : '';
+      var delBtn = canDel(f) ? '<button class="btn icon card-del" data-a="delFinding" data-id="' + f.id + '" aria-label="מחיקת ממצא #' + f.id + '">' + I.trash(16) + '</button>' : '';
+      return '<article class="fc" data-a="open" data-id="' + f.id + '"><div style="display:flex;align-items:center;gap:8px"><span class="c-id">#' + f.id + '</span><span style="flex:1"></span>' + delBtn + quickDone + stPill(f.status, true, 'aria-haspopup="menu" aria-label="סטטוס: ' + lbl(ST, f.status) + ', לחצו לשינוי" data-a="menu" data-v="st-' + f.id + '"') + '</div>' +
+        '<div style="font-size:15px;font-weight:600;line-height:1.35">' + esc(f.title) + '</div>' + (f.module || f.screen ? '<div style="font-size:12.5px;color:var(--text-2)">' + esc([f.module, f.screen].filter(Boolean).join(' · ')) + '</div>' : '') + (S.list.scope === 'all' ? '<div class="muted" style="font-size:12px">נרשם ע״י ' + esc(uname(f.reporterId)) + ' · ' + fmtOpen(f.createdAt) + '</div>' : '') +
+        '<div style="display:flex;align-items:center;gap:8px;padding-top:6px;border-top:1px solid var(--border)">' + av(a) + '<span class="truncate" style="font-size:12.5px;color:var(--text-2);flex:1">' + esc(a ? a.name : 'לא שויך') + '</span><span class="' + dueCls(f) + '">' + I.cal() + (f.dueDate ? fmtDue(f.dueDate) + (isOverdue(f) ? ' · באיחור' : '') : 'ללא יעד') + '</span></div></article>';
+    }).join('');
+    return chipsHtml() +
+      '<div class="table hide-m" data-keep-scroll="table" role="table" aria-label="רשימת ממצאים"><div style="min-width:' + minW + 'px">' + head + body + empty + '</div></div>' +
+      '<div class="mcards show-m">' + (n ? cards : empty.replace('class="empty"', 'class="empty card"')) + '</div>' +
+      '<div style="display:flex;justify-content:space-between;padding-top:12px;font-size:12.5px" class="muted"><span>מציג ' + n + ' מתוך ' + S.findings.length + ' ממצאים</span><button class="link-btn show-m" data-a="exportCsv">ייצוא ל-Excel</button></div>';
+  }
+
+  // floating row menu (status / assignee) — rendered outside the scrolling table so it is never clipped
+  function rowMenu() {
+    var m = /^(st|as)-(\d+)$/.exec(S.menu || '');
+    if (!m || !S.menuRect) return '';
+    var f = byId(m[2]); if (!f) return '';
+    var r = S.menuRect, vh = window.innerHeight, vw = window.innerWidth;
+    var up = r.bottom + 320 > vh && r.top > 320;
+    var menuW = Math.min(260, vw - 16);
+    var horiz = r.right - menuW < 8 ? 'left:8px;right:auto;' : 'right:' + Math.max(8, vw - r.right) + 'px;'; // keep the menu on screen (phones)
+    var pos = 'position:fixed;z-index:45;max-width:' + (vw - 16) + 'px;' + horiz + (up ? 'bottom:' + (vh - r.top + 4) + 'px;top:auto;' : 'top:' + (r.bottom + 4) + 'px;');
+    if (m[1] === 'st') {
+      return '<div class="menu" data-a="noop" role="menu" aria-label="שינוי סטטוס" style="' + pos + '"><div class="menu-h">שינוי סטטוס · #' + f.id + '</div>' + ST.map(function (s) { return '<button role="menuitemradio" aria-checked="' + (f.status === s[0]) + '" class="menu-item" data-a="setStatus" data-id="' + f.id + '" data-v="' + s[0] + '"><span class="dot d-' + s[0] + '"></span><span style="flex:1">' + s[1] + '</span>' + (f.status === s[0] ? '<span style="color:var(--accent-text);display:inline-flex">' + I.check() + '</span>' : '') + '</button>'; }).join('') + '</div>';
+    }
+    return '<div class="menu" data-a="noop" role="menu" aria-label="העברה למטפל" style="' + pos + 'min-width:250px"><div class="menu-h">העבר למטפל · #' + f.id + '</div>' +
+      '<button role="menuitemradio" aria-checked="' + (f.assigneeId == null) + '" class="menu-item" data-a="setAssignee" data-id="' + f.id + '" data-v="">' + av(null, 'av-sm') + '<span style="flex:1">לא שויך</span></button>' +
+      activeUsers().map(function (u) { var load = S.findings.filter(function (x) { return x.assigneeId === u.id && OPEN.indexOf(x.status) >= 0; }).length; return '<button role="menuitemradio" aria-checked="' + (f.assigneeId === u.id) + '" class="menu-item" data-a="setAssignee" data-id="' + f.id + '" data-v="' + u.id + '">' + av(u, 'av-sm') + '<span style="flex:1">' + esc(u.name) + '</span><span class="menu-meta">' + load + ' פתוחים</span>' + (f.assigneeId === u.id ? '<span style="color:var(--accent-text);display:inline-flex">' + I.check() + '</span>' : '') + '</button>'; }).join('') + '</div>';
+  }
+
+  // ------------------------------------------------------------------ drawer (finding detail)
+  function viewDrawer() {
+    var f = byId(S.drawer);
+    if (!f) return '<div class="drawer-bg" data-a="closeDrawer"></div><aside class="drawer" role="dialog" aria-label="ממצא"><div class="drawer-h"><strong style="flex:1">הממצא לא נמצא</strong><button class="btn icon" data-a="closeDrawer" aria-label="סגירה">' + I.x(16) + '</button></div></aside>';
+    var users = activeUsers();
+    var userSel = function (k, val, emptyLabel) {
+      var opts = '<option value="">' + emptyLabel + '</option>' + users.map(function (u) { return '<option value="' + u.id + '"' + (val === u.id ? ' selected' : '') + '>' + esc(u.name) + '</option>'; }).join('');
+      if (val && !users.some(function (u) { return u.id === val; })) opts += '<option value="' + val + '" selected>' + esc(uname(val)) + ' (לא פעיל)</option>';
+      return '<select id="d-' + k + '" class="select" data-c="fld" data-k="' + k + '">' + opts + '</select>';
+    };
+    var mods = moduleNames();
+    var quick = [];
+    if (f.status === 'open') quick.push(['progress', 'התחל טיפול']);
+    if (OPEN.indexOf(f.status) >= 0) quick.push(['resolved', 'סמן כטופל']);
+    if (f.status !== 'feedback' && OPEN.indexOf(f.status) >= 0) quick.push(['feedback', 'בקש משוב']);
+    if (f.status === 'resolved') quick.push(['closed', 'אמת וסגור']);
+    if (OPEN.indexOf(f.status) < 0) quick.push(['open', 'פתח מחדש']);
+    var history = (f.history || []).slice().reverse().map(function (h) {
+      var u = user(h.by);
+      var txt;
+      if (h.field === '_created') txt = 'פתח/ה את הממצא';
+      else if (h.field === 'status') txt = 'שינה/תה סטטוס: ' + lbl(ST, h.from) + ' ← ' + lbl(ST, h.to);
+      else if (h.field === 'assigneeId' || h.field === 'ownerId') txt = FIELD_HE[h.field] + ': ' + (uname(h.from) || 'לא שויך') + ' ← ' + (uname(h.to) || 'לא שויך');
+      else if (h.field === 'severity') txt = 'חומרה: ' + lbl(SEV, h.from) + ' ← ' + lbl(SEV, h.to);
+      else if (h.field === 'type') txt = 'סוג: ' + lbl(TYPES, h.from) + ' ← ' + lbl(TYPES, h.to);
+      else if (h.field === 'dueDate') txt = 'תאריך יעד: ' + (h.from ? ddmm(h.from) : '—') + ' ← ' + (h.to ? ddmm(h.to) : '—');
+      else if (h.field === 'module') txt = 'מודול: ' + (h.from || '—') + ' ← ' + (h.to || '—');
+      else txt = 'עדכן/ה ' + (FIELD_HE[h.field] || h.field);
+      return '<div class="tl">' + av(u, 'av-sm') + '<div class="body"><span style="font-weight:600">' + esc(u ? u.name : '') + '</span> <span style="color:var(--text-2)">' + esc(txt) + '</span> <span class="muted" style="font-size:12px">· ' + fmtWhen(h.at) + '</span></div></div>';
+    }).join('');
+    var comments = (f.comments || []).map(function (c) {
+      var u = user(c.userId);
+      return '<div class="tl">' + av(u, 'av-sm') + '<div class="body"><div style="margin-bottom:3px"><span style="font-weight:600">' + esc(u ? u.name : '') + '</span> <span class="muted" style="font-size:12px">· ' + fmtWhen(c.at) + '</span></div><div class="comment">' + esc(c.text) + '</div></div></div>';
+    }).join('');
+    var atts = (f.attachments || []).map(function (a) {
+      var canDel = S.me.isAdmin || a.userId === S.me.id;
+      var key = f.id + ':' + a.id;
+      var isImg = /^image\//.test(a.type);
+      return '<div class="thumb"><button type="button" data-a="openAtt" data-id="' + f.id + '" data-v="' + a.id + '" style="all:unset;cursor:pointer;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:4px;text-align:center;word-break:break-all;font-size:11px" aria-label="פתיחת ' + esc(a.name) + '">' + (isImg ? (THUMBS[key] ? '<img src="' + THUMBS[key] + '" alt="' + esc(a.name) + '">' : '<span data-thumb="' + key + '">טוען…</span>') : esc(a.name)) + '</button>' + (canDel ? '<button class="x" data-a="delAtt" data-id="' + f.id + '" data-v="' + a.id + '" aria-label="מחיקת צרופה">' + I.x(12) + '</button>' : '') + '</div>';
+    }).join('');
+    var canDelete = canDel(f);
+    return '<div class="drawer-bg" data-a="closeDrawer"></div>' +
+      '<aside class="drawer" role="dialog" aria-modal="true" aria-label="ממצא ' + f.id + '">' +
+      '<div class="drawer-h"><span class="c-id" style="font-size:14px;font-weight:600">#' + f.id + '</span>' + stPill(f.status) + sevHtml(f.severity) + '<span style="flex:1"></span>' +
+      '<button class="btn icon" data-a="copyLink" data-id="' + f.id + '" aria-label="העתקת קישור לממצא" title="העתקת קישור">' + I.copy() + '</button>' +
+      (canDelete ? '<button class="btn icon danger" data-a="delFinding" data-id="' + f.id + '" aria-label="מחיקת הממצא" title="מחיקה">' + I.trash() + '</button>' : '') +
+      '<button class="btn icon" data-a="closeDrawer" aria-label="סגירה">' + I.x(16) + '</button></div>' +
+      '<div class="drawer-b" data-keep-scroll="drawer">' +
+      '<div><label for="d-title" class="sr">כותרת</label><input id="d-title" class="title-input" data-c="fld" data-k="title" value="' + esc(f.title) + '"><div class="muted" style="font-size:12.5px;margin-top:2px">נרשם ע״י ' + esc(uname(f.reporterId)) + ' (' + esc(lbl(ROLES, (user(f.reporterId) || {}).role)) + ') · ' + fmtWhen(f.createdAt) + (f.updatedAt !== f.createdAt ? ' · עודכן ' + fmtWhen(f.updatedAt) : '') + '</div></div>' +
+      '<div class="quick">' + quick.map(function (q) { return '<button class="btn' + (q[0] === 'resolved' ? ' primary' : '') + '" data-a="setStatus" data-id="' + f.id + '" data-v="' + q[0] + '">' + (q[0] === 'resolved' ? I.check() : '') + q[1] + '</button>'; }).join('') + '</div>' +
+      '<div class="grid3">' +
+      '<div class="field"><label for="d-status">סטטוס</label><select id="d-status" class="select" data-c="fld" data-k="status">' + ST.map(function (s) { return '<option value="' + s[0] + '"' + (f.status === s[0] ? ' selected' : '') + '>' + s[1] + '</option>'; }).join('') + '</select></div>' +
+      '<div class="field"><label for="d-severity">חומרה</label><select id="d-severity" class="select" data-c="fld" data-k="severity">' + SEV.map(function (s) { return '<option value="' + s[0] + '"' + (f.severity === s[0] ? ' selected' : '') + '>' + s[1] + (s[0] === 'critical' ? ' (חוסם עלייה)' : '') + '</option>'; }).join('') + '</select></div>' +
+      '<div class="field"><label for="d-type">סוג</label><select id="d-type" class="select" data-c="fld" data-k="type">' + TYPES.map(function (s) { return '<option value="' + s[0] + '"' + (f.type === s[0] ? ' selected' : '') + '>' + s[1] + '</option>'; }).join('') + '</select></div>' +
+      '<div class="field"><label for="d-assigneeId">מטפל</label>' + userSel('assigneeId', f.assigneeId, 'לא שויך') + '</div>' +
+      '<div class="field"><label for="d-ownerId">אחראי</label>' + userSel('ownerId', f.ownerId, '—') + '</div>' +
+      '<div class="field"><label for="d-dueDate">תאריך יעד</label><input id="d-dueDate" type="date" class="input" data-c="fld" data-k="dueDate" value="' + esc(f.dueDate || '') + '"></div>' +
+      '<div class="field"><label for="d-module">מודול</label><select id="d-module" class="select" data-c="fld" data-k="module"><option value="">—</option>' + mods.map(function (m) { return '<option' + (f.module === m ? ' selected' : '') + '>' + esc(m) + '</option>'; }).join('') + '</select></div>' +
+      '<div class="field" style="grid-column:span 2"><label for="d-screen">מסך בפריוריטי</label><input id="d-screen" class="input" data-c="fld" data-k="screen" value="' + esc(f.screen || '') + '"></div>' +
+      '</div>' +
+      '<div class="field"><label for="d-description">תיאור הבעיה</label><textarea id="d-description" class="textarea" data-c="fld" data-k="description" placeholder="פירוט הבעיה">' + esc(f.description || '') + '</textarea></div>' +
+      '<div class="field"><label for="d-steps">צעדים לשחזור / דוגמה</label><textarea id="d-steps" class="textarea" style="min-height:64px" data-c="fld" data-k="steps" placeholder="מספר הזמנה, פק״ע, צעדים">' + esc(f.steps || '') + '</textarea></div>' +
+      '<div class="field"><label for="d-resolution">פתרון / הערות טיפול</label><textarea id="d-resolution" class="textarea" style="min-height:64px" data-c="fld" data-k="resolution" placeholder="מה נעשה, מה תוקן">' + esc(f.resolution || '') + '</textarea></div>' +
+      '<div class="field"><label for="d-improvement">הצעה לשיפור בהמשך</label><textarea id="d-improvement" class="textarea" style="min-height:64px" data-c="fld" data-k="improvement">' + esc(f.improvement || '') + '</textarea></div>' +
+      '<div class="field"><span class="flabel">צרופות</span><div class="thumbs">' + atts + '<button class="thumb" style="cursor:pointer;border-style:dashed" data-a="pickFile" data-target="drawer" data-id="' + f.id + '">' + I.image() + '</button></div><span class="muted" style="font-size:12px">אפשר גם להדביק צילום מסך (Ctrl+V) כשהחלון פתוח</span></div>' +
+      '<div class="field"><span class="flabel">תגובות (' + (f.comments || []).length + ')</span><div class="timeline">' + (comments || '<span class="muted" style="font-size:13px">אין תגובות עדיין.</span>') + '</div>' +
+      '<div style="display:flex;gap:8px;align-items:flex-end;margin-top:6px"><textarea id="d-comment" class="textarea" style="min-height:44px;flex:1" placeholder="כתיבת תגובה… (Ctrl+Enter לשליחה)"></textarea><button class="btn primary" data-a="addComment" data-id="' + f.id + '">שליחה</button></div></div>' +
+      '<details><summary style="cursor:pointer;font-weight:600;font-size:13px;color:var(--text-2)">היסטוריית שינויים (' + (f.history || []).length + ')</summary><div class="timeline" style="margin-top:10px">' + history + '</div></details>' +
+      '</div></aside>';
+  }
+
+  // ------------------------------------------------------------------ page: summary
+  function summaryData(k) {
+    var opened = [], resolved = [], openEnd = [], feedback = [], crit = [], overdue = [];
+    S.findings.forEach(function (f) {
+      var st = statusAt(f, k);
+      if (st == null) return;
+      if (dayKey(f.createdAt) === k) opened.push(f);
+      var resolvedThatDay = (f.history || []).some(function (h) { return h.field === 'status' && (h.to === 'resolved' || h.to === 'closed') && dayKey(h.at) === k; });
+      if (resolvedThatDay && DONE.indexOf(st) >= 0) resolved.push(f);
+      if (OPEN.indexOf(st) >= 0) {
+        openEnd.push(f);
+        if (st === 'feedback') feedback.push(f);
+        if (f.severity === 'critical') crit.push(f);
+        if (f.dueDate && f.dueDate < k) overdue.push(f);
+      }
+    });
+    return { opened: opened, resolved: resolved, openEnd: openEnd, feedback: feedback, crit: crit, overdue: overdue };
+  }
+  function trendDays() {
+    var t = today();
+    var first = S.settings.pilotStart || (S.findings.length ? S.findings.reduce(function (m, f) { var d = dayKey(f.createdAt); return d < m ? d : m; }, t) : t);
+    if (first > t) first = t;
+    var days = [];
+    for (var d = first; d <= t && days.length < 400; d = addDays(d, 1)) days.push(d);
+    return days.slice(-45);
+  }
+  function viewSummary() {
+    var k = S.summary.date, t = today();
+    var D = summaryData(k);
+    var days = trendDays();
+    var series = days.map(function (d) { var x = summaryData(d); return { d: d, opened: x.opened.length, resolved: x.resolved.length, open: x.openEnd.length }; });
+    var kpi = function (n, l, cls, sub) { return '<div class="card kpi' + (cls ? ' ' + cls : '') + '"><span class="n">' + n + '</span><span class="l">' + l + '</span>' + (sub ? '<span class="muted" style="font-size:12px">' + sub + '</span>' : '') + '</div>'; };
+    var firstDay = days[0] || t;
+    // chart
+    var max = Math.max(4, Math.max.apply(null, series.map(function (s) { return Math.max(s.open, s.opened, s.resolved); })));
+    var step = Math.ceil(max / 4); max = step * 4;
+    var Wd = 736, Hd = 200, n = series.length;
+    var PADX = 22; var xAt = function (i) { return n <= 1 ? Wd / 2 : Wd - PADX - (i / (n - 1)) * (Wd - 2 * PADX); }; // RTL: time flows right → left
+    var yAt = function (v) { return Hd - (v / max) * Hd; };
+    var bw = Math.max(3, Math.min(14, (Wd / Math.max(1, n)) / 3));
+    var grid = '';
+    for (var g = 0; g <= 4; g++) { var gy = yAt(g * step); grid += '<line class="gl" x1="0" x2="' + Wd + '" y1="' + gy + '" y2="' + gy + '"></line><text class="ax" x="' + (Wd + 8) + '" y="' + (gy + 4) + '" text-anchor="start">' + g * step + '</text>'; }
+    var bars = series.map(function (s, i) { var x = xAt(i); return '<rect x="' + (x - bw - 1) + '" y="' + yAt(s.opened) + '" width="' + bw + '" height="' + (Hd - yAt(s.opened)) + '" rx="2" fill="var(--st-open-dot)" opacity=".75"></rect><rect x="' + (x + 1) + '" y="' + yAt(s.resolved) + '" width="' + bw + '" height="' + (Hd - yAt(s.resolved)) + '" rx="2" fill="var(--st-resolved-dot)" opacity=".85"></rect>'; }).join('');
+    var line = series.map(function (s, i) { return (i ? 'L' : 'M') + xAt(i).toFixed(1) + ' ' + yAt(s.open).toFixed(1); }).join(' ');
+    var dots = series.map(function (s, i) { var sel = s.d === k; return '<circle cx="' + xAt(i) + '" cy="' + yAt(s.open) + '" r="' + (sel ? 5 : 3) + '" fill="' + (sel ? 'var(--accent)' : 'var(--surface)') + '" stroke="var(--accent)" stroke-width="2"></circle>'; }).join('');
+    var labelsEvery = Math.max(1, Math.ceil(n / 10));
+    var xl = series.map(function (s, i) { return i % labelsEvery === 0 || i === n - 1 ? '<text class="ax" x="' + xAt(i) + '" y="' + (Hd + 18) + '" text-anchor="middle">' + ddmm(s.d) + '</text>' : ''; }).join('');
+    var hits = series.map(function (s, i) { var w = n <= 1 ? Wd : (Wd - 2 * PADX) / (n - 1); return '<rect x="' + (xAt(i) - w / 2) + '" y="0" width="' + w + '" height="' + (Hd + 20) + '" fill="transparent" style="cursor:pointer" data-a="pickDay" data-v="' + s.d + '" data-tip="' + esc(ddmm(s.d) + ' · נפתחו ' + s.opened + ' · טופלו ' + s.resolved + ' · פתוחים ' + s.open) + '"></rect>'; }).join('');
+    var chart = '<svg role="img" aria-label="גרף: נפתחו, טופלו ופתוחים בסוף כל יום" viewBox="-4 -8 ' + (Wd + 34) + ' ' + (Hd + 30) + '" preserveAspectRatio="none">' + grid + bars + '<path d="' + line + '" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"></path>' + dots + xl + hits + '</svg><div class="tip" id="chart-tip" style="display:none"></div>';
+    // breakdowns (state at end of selected day)
+    var alive = S.findings.filter(function (f) { return statusAt(f, k) != null; });
+    var brk = function (keyFn, labelFn, avFn) {
+      var groups = {};
+      alive.forEach(function (f) {
+        var key = keyFn(f); var st = statusAt(f, k);
+        var g = groups[key] || (groups[key] = { key: key, open: 0, progress: 0, feedback: 0, done: 0 });
+        if (st === 'open') g.open++; else if (st === 'progress') g.progress++; else if (st === 'feedback') g.feedback++; else if (DONE.indexOf(st) >= 0) g.done++;
+      });
+      var arr = Object.keys(groups).map(function (x) { return groups[x]; }).filter(function (g) { return g.open + g.progress + g.feedback + g.done > 0; });
+      arr.sort(function (a, b) { return (b.open + b.progress + b.feedback) - (a.open + a.progress + a.feedback) || b.done - a.done; });
+      if (!arr.length) return '<div class="muted" style="padding:12px 0;font-size:13px">אין נתונים ליום הזה.</div>';
+      var mx = Math.max.apply(null, arr.map(function (g) { return g.open + g.progress + g.feedback + g.done; }));
+      return arr.map(function (g) {
+        var tot = g.open + g.progress + g.feedback + g.done;
+        var seg = function (v, c) { return v ? '<span style="width:' + (v / mx * 100) + '%;background:' + c + '"></span>' : ''; };
+        return '<div class="brk">' + (avFn ? avFn(g.key) : '') + '<span class="truncate" style="flex:0 1 130px;font-weight:500">' + esc(labelFn(g.key)) + '</span><div class="stack">' + seg(g.open, 'var(--st-open-dot)') + seg(g.progress, 'var(--st-progress-dot)') + seg(g.feedback, 'var(--st-feedback-dot)') + seg(g.done, 'var(--st-resolved-dot)') + '</div><span class="num" style="flex:0 0 auto;text-align:end">' + (g.open + g.progress + g.feedback) + ' פתוחים · ' + g.done + ' טופלו' + '</span></div>';
+      }).join('');
+    };
+    var legend = '<div class="legend"><span><span class="dot d-open"></span>פתוח</span><span><span class="dot d-progress"></span>בטיפול</span><span><span class="dot d-feedback"></span>ממתין למשוב</span><span><span class="dot d-resolved"></span>טופל / נסגר</span></div>';
+    var byPerson = brk(function (f) { return f.assigneeId == null ? 'none' : String(f.assigneeId); }, function (x) { return x === 'none' ? 'לא שויך' : uname(x); }, function (x) { return av(x === 'none' ? null : user(x)); });
+    var byModule = brk(function (f) { return f.module || '—'; }, function (x) { return x; });
+    var sortOpen = D.openEnd.slice().sort(function (a, b) { return ord(SEV, a.severity) - ord(SEV, b.severity) || a.id - b.id; });
+    var group = function (title, items, emptyText, extra) {
+      return '<section class="card glist" aria-label="' + esc(title) + '"><div class="card-h" style="padding-bottom:10px"><h2 class="sec-t" style="flex:1">' + esc(title) + '</h2><span class="count">' + items.length + '</span>' + (extra || '') + '</div>' +
+        (items.length ? items.slice(0, 25).map(function (f) { var a = user(f.assigneeId); return '<div class="li" data-a="open" data-id="' + f.id + '"><span class="c-id" style="flex:0 0 40px">#' + f.id + '</span><span class="truncate" style="flex:1;font-weight:500">' + esc(f.title) + '</span>' + (f.severity === 'critical' ? sevHtml('critical') : '') + '<span class="hide-m" style="display:inline-flex;align-items:center;gap:6px;flex:0 0 120px;font-size:12.5px;color:var(--text-2)">' + av(a, 'av-sm') + '<span class="truncate">' + esc(a ? a.name : 'לא שויך') + '</span></span></div>'; }).join('') + (items.length > 25 ? '<div class="li muted" style="cursor:default">ועוד ' + (items.length - 25) + '…</div>' : '') : '<div class="li muted" style="cursor:default">' + emptyText + '</div>') + '</section>';
+    };
+    return '<div class="page-h"><div class="grow"><h1>סיכום יומי</h1><span class="sub">' + weekday(k) + ', ' + ddmmyyyy(k) + (k === t ? ' · היום' : '') + '</span></div>' +
+      '<div class="seg-ctrl" role="group" aria-label="בחירת תאריך"><button aria-label="היום הקודם" data-a="day" data-v="-1">' + I.prev() + '</button><label for="sum-date" class="sr">תאריך</label><input id="sum-date" type="date" value="' + k + '" max="' + t + '" data-c="sumDate"><button aria-label="היום הבא" data-a="day" data-v="1"' + (k >= t ? ' disabled' : '') + '>' + I.next() + '</button></div>' +
+      (k !== t ? '<button class="btn" data-a="day" data-v="0">היום</button>' : '') +
+      '<button class="btn" data-a="copySummary">' + I.copy() + 'העתק סיכום כטקסט</button>' +
+      '<button class="btn" data-a="exportCsv">' + I.download() + 'ייצוא ל-Excel</button>' +
+      '<span class="hide-m">' + themeBtn() + '</span></div>' +
+      '<div style="display:flex;flex-direction:column;gap:16px">' +
+      '<section class="kpis" aria-label="מדדי היום">' + kpi(D.opened.length, 'נפתחו ' + (k === t ? 'היום' : 'ביום זה')) + kpi(D.resolved.length, 'טופלו ' + (k === t ? 'היום' : 'ביום זה')) + kpi(D.openEnd.length, k === t ? 'פתוחים כרגע' : 'פתוחים בסוף היום', '', D.feedback.length + ' ממתינים למשוב') + kpi(D.crit.length, 'קריטיים פתוחים', D.crit.length ? 'alert' : '') + kpi(D.overdue.length, 'חורגים מתאריך היעד', D.overdue.length ? 'alert' : '') + '</section>' +
+      '<section class="card" aria-labelledby="trend-t" style="padding-bottom:16px"><div class="card-h" style="flex-wrap:wrap"><h2 id="trend-t" class="sec-t" style="flex:1">מגמה לאורך הפיילוט</h2><div class="legend"><span><span class="dot" style="background:var(--st-open-dot)"></span>נפתחו</span><span><span class="dot" style="background:var(--st-resolved-dot)"></span>טופלו</span><span><span class="dot" style="background:var(--accent);border-radius:2px;height:3px;width:14px"></span>פתוחים בסוף היום</span></div></div><div class="chart" id="chart">' + chart + '</div><div class="muted" style="font-size:12px;padding:6px 16px 0">' + ddmm(firstDay) + ' עד ' + ddmm(t) + ' · לחיצה על יום בגרף מציגה את הסיכום שלו</div></section>' +
+      '<div class="cols2"><section class="card" aria-labelledby="by-person" style="padding-bottom:8px"><div class="card-h"><h2 id="by-person" class="sec-t" style="flex:1">לפי מטפל</h2></div><div style="padding:6px 16px 0">' + legend + '</div><div role="table" aria-label="פילוח לפי מטפל" style="padding:6px 16px 0">' + byPerson + '</div></section>' +
+      '<section class="card" aria-labelledby="by-module" style="padding-bottom:8px"><div class="card-h"><h2 id="by-module" class="sec-t" style="flex:1">לפי מודול</h2></div><div style="padding:6px 16px 0">' + legend + '</div><div role="table" aria-label="פילוח לפי מודול" style="padding:6px 16px 0">' + byModule + '</div></section></div>' +
+      '<div class="cols2">' + group(k === t ? 'טופל היום' : 'טופל ביום זה', D.resolved, 'עוד לא טופלו ממצאים ביום הזה.') + group('קריטיים פתוחים', D.crit, 'אין קריטיים פתוחים 🎉') + '</div>' +
+      '<div class="cols2">' + group('עדיין פתוח', sortOpen, 'אין ממצאים פתוחים 🎉', '<a href="#/list" data-a="view" data-v="open" style="font-size:12.5px;font-weight:600">לרשימה</a>') + group('ממתין למשוב', D.feedback, 'אין ממצאים שממתינים למשוב.') + '</div>' +
+      '</div>';
+  }
+  function summaryText(k) {
+    var D = summaryData(k);
+    var name = (S.settings.projectName || 'פיילוט') + (S.settings.clientName ? ' – ' + S.settings.clientName : '');
+    var line = function (f) { var a = uname(f.assigneeId); return '• #' + f.id + ' ' + f.title + (a ? ' (' + a + ')' : ''); };
+    var out = ['*סיכום יומי – ' + name + '*', weekday(k) + ', ' + ddmmyyyy(k), '',
+      'נפתחו: ' + D.opened.length + ' | טופלו: ' + D.resolved.length + ' | פתוחים: ' + D.openEnd.length + ' | קריטיים פתוחים: ' + D.crit.length + ' | באיחור: ' + D.overdue.length, ''];
+    if (D.resolved.length) { out.push('✅ *טופלו:*'); D.resolved.forEach(function (f) { out.push(line(f)); }); out.push(''); }
+    if (D.crit.length) { out.push('🔴 *קריטיים פתוחים:*'); D.crit.forEach(function (f) { out.push(line(f)); }); out.push(''); }
+    if (D.overdue.length) { out.push('⚠️ *באיחור:*'); D.overdue.forEach(function (f) { out.push(line(f) + ' – יעד ' + ddmm(f.dueDate)); }); out.push(''); }
+    if (D.feedback.length) { out.push('⏳ *ממתין למשוב:*'); D.feedback.forEach(function (f) { out.push(line(f)); }); out.push(''); }
+    if (D.opened.length) { out.push('🆕 *נפתחו:*'); D.opened.forEach(function (f) { out.push(line(f)); }); out.push(''); }
+    var per = {};
+    D.openEnd.forEach(function (f) { var a = uname(f.assigneeId) || 'לא שויך'; per[a] = (per[a] || 0) + 1; });
+    var names = Object.keys(per).sort(function (a, b) { return per[b] - per[a]; });
+    if (names.length) { out.push('📋 *פתוחים לפי מטפל:*'); names.forEach(function (n) { out.push('• ' + n + ': ' + per[n]); }); }
+    return out.join('\n').trim();
+  }
+
+  // ------------------------------------------------------------------ page: mine (kanban)
+  function viewMine() {
+    var mode = S.mine.mode, me = S.me.id;
+    var mine = S.findings.filter(function (f) { return mode === 'assignee' ? f.assigneeId === me : mode === 'owner' ? f.ownerId === me : f.reporterId === me; });
+    var weekAgo = addDays(today(), -7);
+    var cols = [['open', 'פתוח'], ['progress', 'בטיפול'], ['feedback', 'ממתין למשוב'], ['resolved', 'טופל (שבוע אחרון)']];
+    var board = cols.map(function (c) {
+      var items = mine.filter(function (f) { return c[0] === 'resolved' ? (DONE.indexOf(f.status) >= 0 && f.resolvedAt && dayKey(f.resolvedAt) >= weekAgo) : f.status === c[0]; })
+        .sort(function (a, b) { return ord(SEV, a.severity) - ord(SEV, b.severity) || (a.dueDate || '9') .localeCompare(b.dueDate || '9'); });
+      return '<div class="kcol" data-drop="' + c[0] + '"><div class="kcol-h"><span class="dot d-' + c[0] + '"></span><span style="flex:1">' + c[1] + '</span><span class="count">' + items.length + '</span></div>' +
+        items.map(function (f) { var a = user(f.assigneeId); return '<div class="kcard" draggable="true" data-drag="' + f.id + '" data-a="open" data-id="' + f.id + '"><div style="display:flex;align-items:center;gap:8px"><span class="c-id">#' + f.id + '</span>' + sevHtml(f.severity) + '</div><div style="font-weight:600;font-size:13.5px;line-height:1.35">' + esc(f.title) + '</div><div style="display:flex;align-items:center;gap:6px;font-size:12px" class="muted"><span class="truncate" style="flex:1">' + esc(f.module || '') + (mode !== 'assignee' ? ' · ' + esc(a ? a.name : 'לא שויך') : '') + '</span><span class="' + dueCls(f) + '" style="font-size:12px">' + (f.dueDate ? fmtDue(f.dueDate) : '') + '</span></div></div>'; }).join('') +
+        (items.length ? '' : '<div class="muted" style="font-size:12.5px;padding:8px 4px">אין כאן כלום</div>') + '</div>';
+    }).join('');
+    var seg = [['assignee', 'מוטל עליי לטפל'], ['owner', 'אני אחראי/ת'], ['reporter', 'רשמתי']];
+    return '<div class="page-h"><div class="grow"><h1>המשימות שלי</h1><span class="sub">גררו כרטיס בין העמודות כדי לעדכן סטטוס</span></div><span class="hide-m">' + syncIndicator() + '</span><span class="hide-m">' + themeBtn() + '</span></div>' +
+      '<div class="tabs" role="tablist" style="margin-bottom:14px">' + seg.map(function (s) { var on = mode === s[0]; var cnt = S.findings.filter(function (f) { return OPEN.indexOf(f.status) >= 0 && (s[0] === 'assignee' ? f.assigneeId === me : s[0] === 'owner' ? f.ownerId === me : f.reporterId === me); }).length; return '<button role="tab" aria-selected="' + on + '" class="tab' + (on ? ' active' : '') + '" data-a="mineMode" data-v="' + s[0] + '">' + s[1] + '<span class="count">' + cnt + '</span></button>'; }).join('') + '</div>' +
+      '<div class="kanban">' + board + '</div>';
+  }
+
+  // ------------------------------------------------------------------ page: settings
+  function viewSettings() {
+    var me = S.me, s = S.settings;
+    var roleOpts = function (val) { return ROLES.map(function (r) { return '<option value="' + r[0] + '"' + (val === r[0] ? ' selected' : '') + '>' + r[1] + '</option>'; }).join(''); };
+    var account = '<section class="card"><h2>החשבון שלי</h2><p class="muted" style="margin:0 0 12px;font-size:13px">השם שלך שמור במכשיר הזה. ״התנתקות״ מחזירה למסך בחירת השם.</p>' +
+      '<form data-form="me" class="grid3"><div class="field"><label for="me-name">שם מלא</label><input id="me-name" name="name" class="input" value="' + esc(me.name) + '"></div><div class="field"><label for="me-role">תפקיד</label><select id="me-role" name="role" class="select">' + roleOpts(me.role) + '</select></div>' +
+      '<div class="field" style="justify-content:flex-end"><button class="btn primary" type="submit">שמירה</button></div></form>' +
+      '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-a="logout">' + I.logout() + 'התנתקות</button>' + themeBtn() + '</div></section>';
+    if (!me.isAdmin) return '<div class="page-h"><div class="grow"><h1>החשבון שלי</h1></div></div><div class="settings">' + account + '</div>';
+    var users = S.users;
+    var origin = INIT.appUrl || (location.origin + location.pathname);
+    var inviteBox = S.lastInvite ? '<div class="ok-box" style="display:flex;flex-direction:column;gap:6px"><strong>קישור כניסה חד-פעמי ל' + esc(S.lastInvite.name) + '</strong><span>שלחו לו/ה את הקישור (וואטסאפ / מייל). פותחים פעם אחת, בוחרים סיסמה ונשארים מחוברים.</span><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="code" style="flex:1;color:var(--text)">' + esc(origin + '?invite=' + S.lastInvite.token) + '</span><button class="btn sm" data-a="copyText" data-v="' + esc(origin + '?invite=' + S.lastInvite.token) + '">' + I.copy(13) + 'העתקה</button></div></div>' : '';
+    var credsText = S.lastCreds ? 'כניסה ל' + (S.settings.projectName || 'ממצאי פיילוט') + ':\n' + origin + '\nנכנסים עם השם: ' + S.lastCreds.name : '';
+    var credsBox = S.lastCreds ? '<div class="ok-box" style="display:flex;flex-direction:column;gap:6px"><strong>הפרטים של ' + esc(S.lastCreds.name) + '</strong><span>שלחו לו/ה את ההודעה הזו.</span><pre class="copy" style="direction:rtl;color:var(--text)">' + esc(credsText) + '</pre><div><button class="btn sm" data-a="copyText" data-v="' + esc(credsText) + '">' + I.copy(13) + 'העתקת ההודעה</button></div></div>' : '';
+    var usersHtml = '<section class="card"><h2>משתמשים</h2><p class="muted" style="margin:0 0 8px;font-size:13px">כל אחד נכנס עם הקישור ובוחר את השם שלו. מי שלא ברשימה כותב את השם ונוסף אוטומטית. אפשר גם להוסיף כאן מראש, וכך השם יופיע ככפתור במסך הכניסה.</p>' + inviteBox + credsBox +
+      users.map(function (u) {
+        return '<div class="urow">' + av(u, 'av-lg') + '<div style="flex:1 1 160px;min-width:0;display:flex;flex-direction:column"><strong class="truncate">' + esc(u.name) + (u.active ? '' : ' <span class="muted" style="font-weight:400">(מושבת)</span>') + '</strong><span class="muted" style="font-size:12px">' + esc(lbl(ROLES, u.role)) + (u.isAdmin ? ' · מנהל' : '') + '</span></div>' +
+          '<select class="select" style="width:150px" data-c="userEdit" data-id="' + u.id + '" data-k="role" aria-label="תפקיד">' + roleOpts(u.role) + '</select>' +
+          '<label class="switch' + (u.isAdmin ? ' on' : '') + '" style="height:32px"><input type="checkbox" class="sr" data-c="userEdit" data-id="' + u.id + '" data-k="isAdmin"' + (u.isAdmin ? ' checked' : '') + '><span class="track"><span class="knob"></span></span>מנהל</label>' +
+          
+          
+          (u.id !== me.id ? '<button class="btn sm' + (u.active ? ' danger' : '') + '" data-a="toggleActive" data-id="' + u.id + '">' + (u.active ? 'השבתה' : 'הפעלה') + '</button>' : '') + '</div>';
+      }).join('') +
+      '<form data-form="addUser" class="urow" style="align-items:flex-end"><div class="field" style="flex:1 1 160px"><label for="nu-name">שם מלא</label><input id="nu-name" name="name" class="input" required placeholder="למשל: אבי כהן"></div><div class="field" style="flex:0 1 150px"><label for="nu-role">תפקיד</label><select id="nu-role" name="role" class="select">' + roleOpts('implementer') + '</select></div><label class="switch" style="height:34px"><input type="checkbox" name="isAdmin" class="chk">מנהל</label><button class="btn primary" type="submit" style="height:34px">' + I.plus() + 'הוספה</button></form></section>';
+    var userOpts = function (val, emptyLabel) { return '<option value="">' + emptyLabel + '</option>' + activeUsers().map(function (u) { return '<option value="' + u.id + '"' + (val === u.id ? ' selected' : '') + '>' + esc(u.name) + '</option>'; }).join(''); };
+    var project = '<section class="card"><h2>פרטי הפיילוט</h2><form data-form="project" class="grid3" style="margin-top:10px">' +
+      '<div class="field"><label for="p-name">שם הפרויקט</label><input id="p-name" name="projectName" class="input" value="' + esc(s.projectName || '') + '"></div>' +
+      '<div class="field"><label for="p-client">שם הלקוח</label><input id="p-client" name="clientName" class="input" value="' + esc(s.clientName || '') + '"></div>' +
+      '<div class="field"><label for="p-owner">אחראי ברירת מחדל לממצא חדש</label><select id="p-owner" name="defaultOwnerId" class="select">' + userOpts(s.defaultOwnerId, 'מי שרשם') + '</select></div>' +
+      '<div class="field"><label for="p-start">תחילת הפיילוט</label><input id="p-start" name="pilotStart" type="date" class="input" value="' + esc(s.pilotStart || '') + '"></div>' +
+      '<div class="field"><label for="p-golive">עלייה לאוויר</label><input id="p-golive" name="goLive" type="date" class="input" value="' + esc(s.goLive || '') + '"></div>' +
+      '<div class="field" style="justify-content:flex-end"><button class="btn primary" type="submit">שמירה</button></div></form></section>';
+    var modules = '<section class="card"><h2>מודולים וניתוב אוטומטי</h2><p class="muted" style="margin:0 0 8px;font-size:13px">כל מודול מופיע כבחירה במסך הרישום. ממצא חדש יועבר אוטומטית למטפל הקבוע של המודול.</p><form data-form="modules">' +
+      S.modules.map(function (m, i) { return '<div class="urow"><input class="input" name="m-name-' + i + '" value="' + esc(m.name) + '" style="flex:1 1 160px;width:auto" aria-label="שם המודול"><select class="select" name="m-as-' + i + '" style="flex:1 1 200px;width:auto" aria-label="מטפל קבוע">' + userOpts(m.defaultAssigneeId, 'ללא מטפל קבוע') + '</select><button type="button" class="btn icon danger" data-a="removeModule" data-i="' + i + '" aria-label="הסרת המודול">' + I.trash() + '</button></div>'; }).join('') +
+      '<div class="urow"><input class="input" name="m-name-new" placeholder="מודול חדש…" style="flex:1 1 160px;width:auto"><select class="select" name="m-as-new" style="flex:1 1 200px;width:auto">' + userOpts(null, 'ללא מטפל קבוע') + '</select><span style="width:32px"></span></div>' +
+      '<div style="padding-top:10px"><button class="btn primary" type="submit">שמירת מודולים</button></div></form></section>';
+    var sync = S.sync || {};
+    var sheets = '<section class="card"><h2>הנתונים והגיבוי</h2>' +
+      '<p class="muted" style="margin:0 0 12px;font-size:13px">כל הממצאים נשמרים ישירות בגיליון Google (לשונית ״ממצאים״). Google שומרת היסטוריית גרסאות של הגיליון, ובנוסף נשמר עותק מלא של הגיליון בתיקיית גיבויים ב-Drive כל לילה. צילומי המסך נשמרים בתיקיית צרופות ב-Drive. כל שינוי נרשם בלשונית ״יומן שינויים״.</p>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">' +
+      (sync.sheetUrl ? '<a class="btn" href="' + esc(sync.sheetUrl) + '" target="_blank" rel="noopener">פתיחת הגיליון</a>' : '') +
+      (sync.backupFolderUrl ? '<a class="btn" href="' + esc(sync.backupFolderUrl) + '" target="_blank" rel="noopener">תיקיית הגיבויים</a>' : '') +
+      (sync.uploadsFolderUrl ? '<a class="btn" href="' + esc(sync.uploadsFolderUrl) + '" target="_blank" rel="noopener">תיקיית הצרופות</a>' : '') +
+      '<button class="btn primary" data-a="backupNow">' + I.refresh() + 'גיבוי עכשיו</button>' +
+      '<button class="btn" data-a="exportCsv">' + I.download() + 'ייצוא ל-Excel</button>' +
+      '<span class="muted" style="font-size:12.5px">' + (sync.lastBackupAt ? 'גיבוי אחרון: ' + fmtWhen(sync.lastBackupAt) : 'עוד לא בוצע גיבוי') + '</span></div></section>';
+    var backup = '';
+    return '<div class="page-h"><div class="grow"><h1>הגדרות</h1><span class="sub">למנהל מערכת</span></div></div><div class="settings">' + project + usersHtml + modules + sheets + backup + account + '</div>';
+  }
+
+  // ------------------------------------------------------------------ modal
+  function viewModal() {
+    var m = S.modal;
+    if (m.type === 'copy') {
+      return '<div class="modal-bg" data-a="closeModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="copy-t" data-stop="1"><div class="modal-h"><h2 id="copy-t" class="sec-t" style="flex:1;font-size:16px">סיכום להעתקה</h2><button class="btn icon" data-a="closeModal" aria-label="סגירה">' + I.x(16) + '</button></div><div class="modal-b"><textarea id="copy-area" class="textarea" style="min-height:320px;font-size:13.5px" readonly>' + esc(m.text) + '</textarea></div><div class="modal-f"><button class="btn primary" data-a="doCopy">' + I.copy() + 'העתקה</button><button class="btn" data-a="closeModal">סגירה</button></div></div></div>';
+    }
+    if (m.type === 'confirmDelete') {
+      var df = byId(m.id);
+      return '<div class="modal-bg" data-a="closeModal"><div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="del-t" aria-describedby="del-d" data-stop="1" style="width:min(440px,100%)">' +
+        '<div class="modal-b" style="gap:10px;padding:20px"><div style="display:flex;align-items:center;gap:10px"><span style="width:40px;height:40px;border-radius:50%;background:var(--danger-soft);color:var(--danger);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto">' + I.trash(20) + '</span><h2 id="del-t" class="sec-t" style="font-size:17px">למחוק את ממצא #' + m.id + '?</h2></div>' +
+        (df ? '<div style="background:var(--surface-2);border-radius:10px;padding:10px 12px;font-weight:500">' + esc(df.title) + '</div>' : '') +
+        '<p id="del-d" style="margin:0;font-size:13.5px;color:var(--text-2)">הממצא יימחק מהרשימה ומהגיליון. אי אפשר לבטל את זה מכאן (עותק נשאר ביומן השינויים ובגיבוי הלילי).</p></div>' +
+        '<div class="modal-f"><button id="confirm-del" class="btn lg" style="background:var(--danger);border-color:var(--danger);color:#fff;font-weight:600" data-a="confirmDelete">' + I.trash(16) + 'כן, למחוק</button><button class="btn lg" data-a="closeModal">ביטול</button></div></div></div>';
+    }
+    if (m.type === 'image') {
+      return '<div class="modal-bg" data-a="closeModal"><div class="modal" role="dialog" aria-modal="true" data-stop="1" style="width:min(1000px,100%)"><div class="modal-h"><h2 class="sec-t truncate" style="flex:1;font-size:15px">' + esc(m.name) + '</h2><button class="btn icon" data-a="closeModal" aria-label="סגירה">' + I.x(16) + '</button></div><div class="modal-b" style="align-items:center"><img src="' + m.src + '" alt="' + esc(m.name) + '" style="max-width:100%;max-height:75vh;border-radius:8px"></div></div></div>';
+    }
+    if (m.type === 'pass') {
+      return '<div class="modal-bg" data-a="closeModal"><div class="modal" role="dialog" aria-modal="true" data-stop="1"><div class="modal-h"><h2 class="sec-t" style="flex:1;font-size:16px">סיסמה חדשה ל' + esc(uname(m.userId)) + '</h2><button class="btn icon" data-a="closeModal" aria-label="סגירה">' + I.x(16) + '</button></div><form data-form="setPass" class="modal-b"><div class="field"><label for="sp-pass">סיסמה (לפחות 6 תווים)</label><input id="sp-pass" name="password" type="text" class="input" autocomplete="off" required minlength="6"></div><div><button class="btn primary" type="submit">שמירה</button></div></form></div></div>';
+    }
+    return '';
+  }
+
+  // ------------------------------------------------------------------ auth views
+  function authShell(inner) { return '<div class="auth"><div class="card">' + '<div class="brand" style="padding:0"><div class="logo" aria-hidden="true">' + I.flag() + '</div><div style="display:flex;flex-direction:column"><span class="brand-t">' + esc((S.status && S.status.projectName) || 'ממצאי פיילוט') + '</span><span class="brand-s">' + esc((S.status && S.status.clientName) ? S.status.clientName + ' · Priority' : 'Priority') + '</span></div></div>' + inner + '</div></div>'; }
+  function viewLogin() {
+    var names = ((S.status && S.status.names) || []).slice().sort(function (a, b) { return a.localeCompare(b, 'he'); });
+    return authShell('<h1>כניסה</h1><p class="muted" style="margin:0;font-size:13.5px">כותבים את השם ונכנסים. כל ממצא יירשם על השם הזה.</p>' + (S.authErr ? '<div class="err-box">' + esc(S.authErr) + '</div>' : '') +
+      (names.length ? '<div style="display:flex;flex-direction:column;gap:8px"><span class="flabel">מי את/ה?</span><div style="display:flex;flex-wrap:wrap;gap:8px">' + names.map(function (n) { return '<button type="button" class="mchip" data-a="pickName" data-v="' + esc(n) + '">' + esc(n) + '</button>'; }).join('') + '</div></div>' : '') +
+      '<form data-form="login" style="display:flex;flex-direction:column;gap:12px"><div class="field"><label for="l-name">' + (names.length ? 'או כתבו את השם שלכם' : 'השם שלך') + '</label><input id="l-name" name="name" class="input" autocomplete="name" required minlength="2" placeholder="שם פרטי ומשפחה"></div>' +
+      '<button class="btn primary lg" type="submit">כניסה</button></form>');
+  }
+  function viewSetup() {
+    return authShell('<h1>הקמת המערכת</h1><p class="muted" style="margin:0;font-size:13.5px">הפעלה ראשונה. יוצרים את המשתמש של מנהל המערכת (את/ה). את שאר הצוות מוסיפים אחר כך בהגדרות.</p>' + (S.authErr ? '<div class="err-box">' + esc(S.authErr) + '</div>' : '') +
+      '<form data-form="setup" style="display:flex;flex-direction:column;gap:12px"><div class="grid2"><div class="field"><label for="s-proj">שם הפרויקט</label><input id="s-proj" name="projectName" class="input" value="ממצאי פיילוט"></div><div class="field"><label for="s-client">שם הלקוח</label><input id="s-client" name="clientName" class="input"></div></div>' +
+      '<div class="field"><label for="s-name">השם שלך</label><input id="s-name" name="name" class="input" required></div><div class="grid2"><div class="field"><label for="s-user">שם משתמש</label><input id="s-user" name="username" class="input" dir="ltr" required></div><div class="field"><label for="s-role">תפקיד</label><select id="s-role" name="role" class="select">' + ROLES.map(function (r) { return '<option value="' + r[0] + '"' + (r[0] === 'pm' ? ' selected' : '') + '>' + r[1] + '</option>'; }).join('') + '</select></div></div>' +
+      '<div class="field"><label for="s-pass">סיסמה (לפחות 6 תווים)</label><input id="s-pass" name="password" type="password" class="input" autocomplete="new-password" required minlength="6"></div><button class="btn primary lg" type="submit">יצירה וכניסה</button></form>');
+  }
+  function viewInvite() {
+    var inv = S.invite;
+    if (!inv) return authShell((S.authErr ? '<div class="err-box">' + esc(S.authErr) + '</div>' : '<p class="muted">טוען…</p>') + '<a class="btn" href="#/">למסך הכניסה</a>');
+    return authShell('<h1>שלום ' + esc(inv.name) + '</h1><p class="muted" style="margin:0;font-size:13.5px">כניסה ראשונה. בוחרים סיסמה פעם אחת ונשארים מחוברים במכשיר הזה. שם המשתמש שלך: <b class="code">' + esc(inv.username) + '</b></p>' + (S.authErr ? '<div class="err-box">' + esc(S.authErr) + '</div>' : '') +
+      '<form data-form="invite" style="display:flex;flex-direction:column;gap:12px"><div class="grid2"><div class="field"><label for="i-name">שם מלא</label><input id="i-name" name="name" class="input" value="' + esc(inv.name) + '"></div><div class="field"><label for="i-role">תפקיד</label><select id="i-role" name="role" class="select">' + ROLES.map(function (r) { return '<option value="' + r[0] + '"' + (inv.role === r[0] ? ' selected' : '') + '>' + r[1] + '</option>'; }).join('') + '</select></div></div>' +
+      '<div class="field"><label for="i-pass">סיסמה (לפחות 6 תווים)</label><input id="i-pass" name="password" type="password" class="input" autocomplete="new-password" required minlength="6"></div><div class="field"><label for="i-pass2">שוב את הסיסמה</label><input id="i-pass2" name="password2" type="password" class="input" autocomplete="new-password" required></div><button class="btn primary lg" type="submit">כניסה</button></form>');
+  }
+
+  // ------------------------------------------------------------------ files
+  function readFile(file) {
+    return new Promise(function (resolve, reject) {
+      if (file.size > 15 * 1024 * 1024) { reject(new Error('הקובץ ' + file.name + ' גדול מ-15MB')); return; }
+      var r = new FileReader();
+      r.onload = function () { resolve({ name: file.name || ('screenshot-' + Date.now() + '.png'), type: file.type || 'application/octet-stream', data: r.result }); };
+      r.onerror = function () { reject(new Error('קריאת הקובץ נכשלה')); };
+      r.readAsDataURL(file);
+    });
+  }
+  function addFiles(files, target, id) {
+    var arr = Array.prototype.slice.call(files || []);
+    if (!arr.length) return;
+    Promise.all(arr.map(readFile)).then(function (list) {
+      if (target === 'qa') { S.qa.files = S.qa.files.concat(list); render(); return; }
+      var p = Promise.resolve();
+      list.forEach(function (f) { p = p.then(function () { return api('POST', '/api/findings/' + id + '/attachments', f).then(function (j) { upsert(j.finding, j.version); }); }); });
+      return p.then(function () { render(); toast(list.length > 1 ? list.length + ' קבצים צורפו' : 'הקובץ צורף'); });
+    }).catch(function (e) { toast(e.message, null, true); });
+  }
+  function pickFiles(cb) {
+    var inp = document.createElement('input');
+    inp.type = 'file'; inp.multiple = true; inp.accept = 'image/*,.pdf,.xlsx,.xls,.csv,.doc,.docx,.txt';
+    inp.addEventListener('change', function () { cb(inp.files); });
+    inp.click();
+  }
+
+  // ------------------------------------------------------------------ clipboard
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(function () { toast('הועתק'); }, function () { fallbackCopy(text); });
+    fallbackCopy(text);
+  }
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false; try { ok = document.execCommand('copy'); } catch (e) { /* */ }
+    ta.remove();
+    toast(ok ? 'הועתק' : 'לא הצלחנו להעתיק. סמנו את הטקסט והעתיקו ידנית', null, !ok);
+  }
+
+  // ------------------------------------------------------------------ actions
+  function setView(id) {
+    var v = allViews().find(function (x) { return x.id === id; }) || VIEWS[0];
+    S.list.view = v.id; S.list.f = viewF(v); S.list.mine = !!v.mine; S.list.dirty = false; S.menu = null;
+  }
+  function qaSubmit() {
+    var q = S.qa;
+    if (!q.text.trim() || q.busy) return;
+    var text = q.text.trim();
+    var nl = text.indexOf('\n');
+    var title = (nl > 0 ? text.slice(0, nl) : text).slice(0, 140);
+    var description = text.length > title.length ? text : '';
+    q.busy = true; render();
+    if (!q.clientId) q.clientId = Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    api('POST', '/api/findings', { clientId: q.clientId, title: title, description: description, module: q.module, severity: q.severity, type: q.type, screen: q.screen, steps: q.steps, assigneeId: q.assigneeId || null, dueDate: q.dueDate || null }).then(function (j) {
+      upsert(j.finding, j.version);
+      var files = q.files.slice();
+      var p = Promise.resolve();
+      files.forEach(function (f) { p = p.then(function () { return api('POST', '/api/findings/' + j.finding.id + '/attachments', f).then(function (r) { upsert(r.finding, r.version); }); }); });
+      return p.then(function () {
+        var a = user(byId(j.finding.id).assigneeId);
+        lsSet('pt_draft', '');
+        S.qa = { text: '', module: null, severity: 'medium', type: 'bug', screen: '', steps: '', assigneeId: '', dueDate: '', files: [], last: { id: j.finding.id, who: a ? a.name : '' }, busy: false, moreOpen: false };
+        render();
+        var ta = $('#qa-text'); if (ta) ta.focus();
+      });
+    }).catch(function (e) { q.busy = false; render(); toast(e.message, null, true); });
+  }
+
+  var THUMBS = {};
+  var thumbLoading = {};
+  function loadThumbs() {
+    $$('[data-thumb]').forEach(function (el) {
+      var key = el.getAttribute('data-thumb');
+      if (THUMBS[key] || thumbLoading[key]) return;
+      thumbLoading[key] = true;
+      var p = key.split(':');
+      api('GET', '/api/findings/' + p[0] + '/attachments/' + p[1]).then(function (j) { THUMBS[key] = j.data; var t = $('[data-thumb="' + key + '"]'); if (t) t.outerHTML = '<img src="' + j.data + '" alt="">'; }).catch(function () { var t = $('[data-thumb="' + key + '"]'); if (t) t.textContent = 'לא נטען'; });
+    });
+  }
+  function downloadText(name, text, type) {
+    var blob = new Blob([text], { type: type || 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+  }
+  var A = {
+    exportCsv: function () {
+      toast('מכין קובץ…');
+      api('GET', '/api/export.csv').then(function (j) { var d = new Date(); downloadText('pilot-findings-' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '.csv', j.csv); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    openAtt: function (el) {
+      var fid = el.getAttribute('data-id'), aid = el.getAttribute('data-v'), key = fid + ':' + aid;
+      var f = byId(fid); var a = f && (f.attachments || []).find(function (x) { return x.id === aid; });
+      var show = function (data) {
+        if (a && /^image\//.test(a.type)) { S.modal = { type: 'image', src: data, name: a.name }; render(); return; }
+        var bin = atob(data.split(',')[1]); var arr = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+        var link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([arr], { type: a ? a.type : 'application/octet-stream' })); link.download = a ? a.name : 'file';
+        document.body.appendChild(link); link.click(); setTimeout(function () { link.remove(); }, 2000);
+      };
+      if (THUMBS[key]) return show(THUMBS[key]);
+      toast('טוען קובץ…');
+      api('GET', '/api/findings/' + fid + '/attachments/' + aid).then(function (j) { if (/^image\//.test(j.type)) THUMBS[key] = j.data; show(j.data); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    backupNow: function (el) {
+      el.disabled = true; el.innerHTML = I.refresh() + 'מגבה…';
+      api('POST', '/api/admin/backup').then(function (j) { S.sync = j.sync; render(); toast('נשמר עותק גיבוי ב-Drive'); }).catch(function (e) { render(); toast(e.message, null, true); });
+    },
+    theme: function () {
+      var dark = !document.documentElement.classList.contains('dark');
+      document.documentElement.classList.toggle('dark', dark);
+      try { localStorage.setItem('pt_theme', dark ? 'dark' : 'light'); } catch (e) { /* */ }
+      render();
+    },
+    logout: function () { S.status = null; location.hash = '#/'; goLogin(); },
+    goSettings: function () { location.hash = '#/settings'; },
+    closeMenus: function () { S.menu = null; render(); },
+    noop: function () {},
+    scope: function (el) { S.list.scope = el.getAttribute('data-v'); S.menu = null; render(); },
+    pickName: function (el) { enterAs(el.getAttribute('data-v')); },
+    menu: function (el) {
+      var v = el.getAttribute('data-v');
+      S.menu = S.menu === v ? null : v;
+      var r = el.getBoundingClientRect();
+      S.menuRect = { top: r.top, bottom: r.bottom, left: r.left, right: r.right };
+      S.menuAt = Date.now();
+      render();
+    },
+    open: function (el) { S.drawer = Number(el.getAttribute('data-id')); S.menu = null; render(); var t = $('.drawer'); if (t) t.focus && setTimeout(function () { var c = $('.drawer .btn[data-a="closeDrawer"]'); if (c) c.focus({ preventScroll: true }); }, 0); },
+    closeDrawer: function () { S.drawer = null; if (/^#\/f\//.test(location.hash)) history.replaceState(null, '', '#/list'); render(); },
+    closeModal: function (el, ev) { if (ev && ev.target.closest('[data-stop]') && !el.matches('.btn')) return; S.modal = null; render(); },
+    view: function (el) { setView(el.getAttribute('data-v')); if (S.route !== 'list') location.hash = '#/list'; else render(); },
+    delView: function (el, ev) { ev.stopPropagation(); var id = el.getAttribute('data-v'); S.customViews = S.customViews.filter(function (v) { return v.id !== id; }); lsSet('pt_views', S.customViews); setView('open'); render(); },
+    saveView: function () {
+      var name = prompt('שם לתצוגה החדשה:');
+      if (!name) return;
+      var v = { id: 'c' + Date.now(), label: name.slice(0, 40), f: JSON.parse(JSON.stringify(S.list.f)), mine: S.list.mine };
+      S.customViews.push(v); lsSet('pt_views', S.customViews); S.list.view = v.id; S.list.dirty = false; render();
+    },
+    clearFilter: function (el) {
+      var k = el.getAttribute('data-k');
+      if (k === '_mine') S.list.mine = false; else if (k === '_q') S.list.q = ''; else S.list.f[k] = k === 'date' ? null : [];
+      S.list.dirty = true; render();
+    },
+    clearAll: function () { S.list.f = emptyF(); S.list.mine = false; S.list.q = ''; S.list.view = 'all'; S.list.dirty = false; S.menu = null; render(); },
+    toggleMine: function () { S.list.mine = !S.list.mine; S.list.dirty = true; render(); },
+    sort: function (el) { var k = el.getAttribute('data-v'); if (S.list.sortKey === k) S.list.sortDir = S.list.sortDir === 'asc' ? 'desc' : 'asc'; else { S.list.sortKey = k; S.list.sortDir = k === 'title' || k === 'module' || k === 'assignee' || k === 'owner' || k === 'reporter' || k === 'due' || k === 'severity' || k === 'status' ? 'asc' : 'desc'; } render(); },
+    setStatus: function (el) { var id = Number(el.getAttribute('data-id')), v = el.getAttribute('data-v'); var f = byId(id); if (f && f.status === v) { S.menu = null; render(); return; } patchFinding(id, { status: v }, '#' + id + ' עבר ל״' + lbl(ST, v) + '״', true); },
+    setAssignee: function (el) { var id = Number(el.getAttribute('data-id')), v = el.getAttribute('data-v'); patchFinding(id, { assigneeId: v ? Number(v) : null }, '#' + id + (v ? ' הועבר ל' + uname(v) : ' הוסר מהמטפל'), true); },
+    qaModule: function (el) { var v = el.getAttribute('data-v'); S.qa.module = S.qa.module === v ? null : v; S.qa.last = null; render(); },
+    qaSev: function (el) { S.qa.severity = el.getAttribute('data-v'); render(); },
+    qaRemoveFile: function (el) { S.qa.files.splice(Number(el.getAttribute('data-i')), 1); render(); },
+    qaUndo: function () {
+      var id = S.qa.last && S.qa.last.id;
+      if (!id) return;
+      api('DELETE', '/api/findings/' + id).then(function (j) { S.findings = S.findings.filter(function (f) { return f.id !== id; }); S.version = j.version; S.qa.last = null; render(); toast('הממצא בוטל'); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    pickFile: function (el) { var target = el.getAttribute('data-target'), id = el.getAttribute('data-id'); pickFiles(function (files) { addFiles(files, target, id); }); },
+    delAtt: function (el) { if (!confirm('למחוק את הצרופה?')) return; api('DELETE', '/api/findings/' + el.getAttribute('data-id') + '/attachments/' + el.getAttribute('data-v')).then(function (j) { upsert(j.finding, j.version); render(); }).catch(function (e) { toast(e.message, null, true); }); },
+    addComment: function (el) {
+      var id = el.getAttribute('data-id'), ta = $('#d-comment');
+      var text = ta ? ta.value.trim() : '';
+      if (!text) return;
+      api('POST', '/api/findings/' + id + '/comments', { text: text }).then(function (j) { upsert(j.finding, j.version); ta.value = ''; render(); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    delFinding: function (el) {
+      var id = Number(el.getAttribute('data-id'));
+      S.menu = null; S.modal = { type: 'confirmDelete', id: id }; render();
+      var b = $('#confirm-del'); if (b) b.focus();
+    },
+    confirmDelete: function () {
+      var id = S.modal && S.modal.id; if (!id) return;
+      var gone = byId(id);
+      S.modal = null;
+      // remove from the screen right away, restore if the server refuses
+      S.findings = S.findings.filter(function (f) { return f.id !== id; }); if (S.drawer === id) S.drawer = null; render();
+      api('DELETE', '/api/findings/' + id).then(function (j) { S.version = j.version; toast('ממצא #' + id + ' נמחק'); }).catch(function (e) { if (gone) upsert(gone); render(); toast('המחיקה לא בוצעה: ' + e.message, null, true); });
+    },
+    copyLink: function (el) { copyText((INIT.appUrl || '') + '?f=' + el.getAttribute('data-id')); },
+    copyText: function (el) { copyText(el.getAttribute('data-v')); },
+    day: function (el) { var v = Number(el.getAttribute('data-v')); S.summary.date = v === 0 ? today() : addDays(S.summary.date, v); if (S.summary.date > today()) S.summary.date = today(); render(); },
+    pickDay: function (el) { S.summary.date = el.getAttribute('data-v'); render(); },
+    copySummary: function () { S.modal = { type: 'copy', text: summaryText(S.summary.date) }; render(); var ta = $('#copy-area'); if (ta) { ta.focus(); ta.select(); } },
+    doCopy: function () { copyText(S.modal.text); },
+    mineMode: function (el) { S.mine.mode = el.getAttribute('data-v'); render(); },
+    invite: function (el) {
+      var id = el.getAttribute('data-id');
+      api('POST', '/api/admin/users/' + id + '/invite').then(function (j) { S.lastInvite = { name: uname(id), token: j.invite }; render(); window.scrollTo(0, 0); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    setPass: function (el) { S.modal = { type: 'pass', userId: Number(el.getAttribute('data-id')) }; render(); var i = $('#sp-pass'); if (i) i.focus(); },
+    toggleActive: function (el) {
+      var u = user(el.getAttribute('data-id'));
+      if (u.active && !confirm('להשבית את ' + u.name + '? הוא/היא יתנתק/ו ולא יוכלו להיכנס. הממצאים שלהם נשמרים.')) return;
+      adminUser(u.id, { active: !u.active }, u.active ? 'המשתמש הושבת' : 'המשתמש הופעל');
+    },
+    removeModule: function (el) { var i = Number(el.getAttribute('data-i')); S.modules.splice(i, 1); saveModules(S.modules); },
+    regenSecret: function () { if (!confirm('ליצור קוד סודי חדש? צריך לעדכן אותו גם בסקריפט שבגיליון.')) return; api('PUT', '/api/admin/settings', { regenerateSecret: true }).then(reload).then(function () { toast('נוצר קוד חדש'); }).catch(function (e) { toast(e.message, null, true); }); },
+    syncNow: function (el) {
+      el.disabled = true; el.innerHTML = I.refresh() + 'מסנכרן…';
+      api('POST', '/api/admin/sync').then(function (j) { S.sync = j.sync; render(); toast('סונכרנו ' + j.rows + ' שורות לגיליון'); }).catch(function (e) { reload().then(function () { toast(e.message, null, true); }); });
+    }
+  };
+
+  function adminUser(id, patch, msg) {
+    return api('PATCH', '/api/admin/users/' + id, patch).then(function (j) {
+      var i = S.users.findIndex(function (u) { return u.id === j.user.id; }); if (i >= 0) S.users[i] = j.user;
+      if (S.me.id === j.user.id) S.me = j.user;
+      render(); if (msg) toast(msg);
+    }).catch(function (e) { toast(e.message, null, true); render(); });
+  }
+  function saveModules(mods) {
+    return api('PUT', '/api/admin/settings', { modules: mods }).then(reload).then(function () { toast('המודולים נשמרו'); }).catch(function (e) { toast(e.message, null, true); });
+  }
+  function reload() { return bootstrap().then(render); }
+
+  function enterAs(name) {
+    name = String(name || '').replace(/\s+/g, ' ').trim();
+    if (name.length < 2) { S.authErr = 'כתבו את השם שלכם'; render(); return; }
+    setName(name); S.authErr = null; S.status = null;
+    S.route = 'add'; location.hash = '#/add';
+    openAppNow();
+  }
+
+  // forms
+  var FORMS = {
+    qa: function () { qaSubmit(); },
+    login: function (fd) { enterAs(fd.name); },
+    setup: function (fd) {
+      S.authErr = null;
+      api('POST', '/api/setup', fd).then(bootFrom).then(function () { S.route = 'settings'; location.hash = '#/settings'; render(); toast('המערכת הוקמה. עכשיו מוסיפים את הצוות'); }).catch(function (e) { S.authErr = e.message; render(); });
+    },
+    invite: function (fd) {
+      S.authErr = null;
+      if (fd.password !== fd.password2) { S.authErr = 'הסיסמאות לא זהות'; render(); return; }
+      api('POST', '/api/invite/' + encodeURIComponent(S.inviteToken), { name: fd.name, role: fd.role, password: fd.password }).then(bootFrom).then(function () { S.route = 'add'; location.hash = '#/add'; render(); }).catch(function (e) { S.authErr = e.message; render(); });
+    },
+    me: function (fd) {
+      var body = { name: fd.name, role: fd.role };
+      if (fd.newPassword) { body.newPassword = fd.newPassword; body.oldPassword = fd.oldPassword; }
+      api('PATCH', '/api/me', body).then(function (j) { setName(j.me.name); S.me = j.me; var i = S.users.findIndex(function (u) { return u.id === j.me.id; }); if (i >= 0) S.users[i] = j.me; render(); toast('נשמר'); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    project: function (fd) {
+      api('PUT', '/api/admin/settings', { projectName: fd.projectName, clientName: fd.clientName, pilotStart: fd.pilotStart, goLive: fd.goLive, defaultOwnerId: fd.defaultOwnerId || null }).then(reload).then(function () { toast('נשמר'); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    addUser: function (fd, form) {
+      api('POST', '/api/admin/users', { name: fd.name, role: fd.role, isAdmin: !!fd.isAdmin }).then(function (j) {
+        S.users.push(j.user); S.lastInvite = null; S.lastCreds = { name: j.user.name };
+        render(); window.scrollTo(0, 0); toast('המשתמש נוסף');
+      }).catch(function (e) { toast(e.message, null, true); });
+    },
+    modules: function (fd) {
+      var mods = S.modules.map(function (m, i) { return { name: fd['m-name-' + i], defaultAssigneeId: fd['m-as-' + i] || null }; });
+      if (fd['m-name-new'] && fd['m-name-new'].trim()) mods.push({ name: fd['m-name-new'].trim(), defaultAssigneeId: fd['m-as-new'] || null });
+      saveModules(mods);
+    },
+    sheets: function (fd) {
+      api('PUT', '/api/admin/settings', { sheetsUrl: fd.sheetsUrl }).then(reload).then(function () { toast(fd.sheetsUrl ? 'נשמר. הסנכרון הראשון ירוץ בעוד רגע' : 'הסנכרון ל-Sheets כובה'); setTimeout(function () { refreshVersion(true); }, 6000); }).catch(function (e) { toast(e.message, null, true); });
+    },
+    setPass: function (fd) {
+      var id = S.modal.userId;
+      adminUser(id, { password: fd.password }, 'הסיסמה עודכנה').then(function () { S.modal = null; render(); });
+    }
+  };
+
+  // ------------------------------------------------------------------ events
+  document.addEventListener('click', function (ev) {
+    var el = ev.target.closest('[data-a]');
+    if (!el) return;
+    var a = el.getAttribute('data-a');
+    if (a === 'closeModal' && el.classList.contains('modal-bg') && ev.target !== el) return; // click inside modal
+    if (a === 'closeDrawer' && el.classList.contains('drawer-bg') && ev.target !== el) return;
+    if (el.tagName === 'A' && a === 'view') ev.preventDefault();
+    if (A[a]) { if (el.closest('form') && el.tagName === 'BUTTON' && el.getAttribute('type') !== 'button') ev.preventDefault(); A[a](el, ev); }
+  });
+  document.addEventListener('submit', function (ev) {
+    var form = ev.target.closest('[data-form]');
+    if (!form) return;
+    ev.preventDefault();
+    var fd = {};
+    Array.prototype.forEach.call(form.elements, function (e) {
+      if (!e.name) return;
+      if (e.type === 'checkbox') fd[e.name] = e.checked; else fd[e.name] = e.value;
+    });
+    var fn = FORMS[form.getAttribute('data-form')];
+    if (fn) fn(fd, form);
+  });
+  document.addEventListener('input', function (ev) {
+    var el = ev.target;
+    var k = el.getAttribute && el.getAttribute('data-i');
+    if (k === 'q') {
+      S.list.q = el.value;
+      var box = $('#list-results'); if (box) box.innerHTML = listResults();
+    } else if (k === 'qaText') {
+      S.qa.text = el.value; lsSet('pt_draft', el.value);
+      if (S.qa.last) { S.qa.last = null; var s = $('.success'); if (s) s.remove(); }
+      var b = $('#qa-add'); if (b) b.disabled = !S.qa.text.trim() || S.qa.busy;
+      var h = $('#qa-hint'); if (h) h.textContent = qaHint();
+    } else if (el.getAttribute && el.getAttribute('data-c') === 'qa' && el.tagName !== 'SELECT') {
+      S.qa[el.getAttribute('data-k')] = el.value;
+    }
+  });
+  document.addEventListener('change', function (ev) {
+    var el = ev.target;
+    var c = el.getAttribute && el.getAttribute('data-c');
+    if (!c) return;
+    var k = el.getAttribute('data-k');
+    if (c === 'flt') {
+      var F = FILTERS.find(function (x) { return x.k === k; });
+      var v = el.getAttribute('data-v');
+      if (F.single) { S.list.f[k] = el.checked ? v : null; S.menu = null; }
+      else { var arr = S.list.f[k].slice(); var i = arr.indexOf(v); if (el.checked && i < 0) arr.push(v); if (!el.checked && i >= 0) arr.splice(i, 1); S.list.f[k] = arr; }
+      S.list.dirty = true; render();
+    } else if (c === 'col') {
+      S.list.cols[k] = el.checked; lsSet('pt_cols', S.list.cols); render();
+    } else if (c === 'qa') {
+      S.qa[k] = el.value; if (k === 'assigneeId') render();
+    } else if (c === 'fld') {
+      var f = byId(S.drawer); if (!f) return;
+      var val = el.value;
+      if (k === 'assigneeId' || k === 'ownerId') val = val ? Number(val) : null;
+      if (k === 'dueDate') val = val || null;
+      if (k === 'title' && !val.trim()) { el.value = f.title; return; }
+      if ((f[k] == null ? '' : f[k]) === (val == null ? '' : val)) return;
+      var msg = k === 'status' ? '#' + f.id + ' עבר ל״' + lbl(ST, val) + '״' : 'נשמר';
+      patchFinding(f.id, (function () { var o = {}; o[k] = val; return o; })(), msg, k === 'status' || k === 'assigneeId');
+    } else if (c === 'sumDate') {
+      if (el.value) { S.summary.date = el.value > today() ? today() : el.value; render(); }
+    } else if (c === 'userEdit') {
+      var id = Number(el.getAttribute('data-id'));
+      var patch = {}; patch[k] = el.type === 'checkbox' ? el.checked : el.value;
+      adminUser(id, patch, 'נשמר');
+    }
+  });
+  document.addEventListener('toggle', function (ev) {
+    if (ev.target.matches && ev.target.matches('[data-a-toggle="qaMore"]')) S.qa.moreOpen = ev.target.open;
+  }, true);
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape') {
+      if (S.menu) { S.menu = null; render(); return; }
+      if (S.modal) { S.modal = null; render(); return; }
+      if (S.drawer) { A.closeDrawer(); return; }
+    }
+    if ((ev.ctrlKey || ev.metaKey) && ev.key === 'Enter') {
+      if (ev.target.id === 'qa-text' || (ev.target.closest && ev.target.closest('[data-form="qa"]'))) { ev.preventDefault(); qaSubmit(); }
+      else if (ev.target.id === 'd-comment') { ev.preventDefault(); var b = $('[data-a="addComment"]'); if (b) A.addComment(b); }
+    }
+  });
+  document.addEventListener('paste', function (ev) {
+    if (S.phase !== 'app') return;
+    var items = (ev.clipboardData && ev.clipboardData.files) || [];
+    if (!items.length) return;
+    if (S.drawer) { ev.preventDefault(); addFiles(items, 'drawer', S.drawer); }
+    else if (S.route === 'add') { ev.preventDefault(); addFiles(items, 'qa'); }
+  });
+  // chart tooltip
+  document.addEventListener('mouseover', function (ev) {
+    var t = ev.target.closest && ev.target.closest('[data-tip]');
+    var tip = $('#chart-tip');
+    if (!tip) return;
+    if (!t) { tip.style.display = 'none'; return; }
+    var box = $('#chart').getBoundingClientRect(), r = t.getBoundingClientRect();
+    tip.textContent = t.getAttribute('data-tip');
+    tip.style.display = 'block';
+    tip.style.right = 'auto';
+    tip.style.left = Math.max(0, Math.min(box.width - 10, r.left - box.left + r.width / 2)) - tip.offsetWidth / 2 + 'px';
+    tip.style.transform = 'translateY(-4px)';
+    tip.style.top = '0px';
+  });
+  // kanban drag & drop
+  var dragId = null;
+  document.addEventListener('dragstart', function (ev) { var c = ev.target.closest && ev.target.closest('[data-drag]'); if (!c) return; dragId = Number(c.getAttribute('data-drag')); c.classList.add('dragging'); try { ev.dataTransfer.setData('text/plain', String(dragId)); ev.dataTransfer.effectAllowed = 'move'; } catch (e) { /* */ } });
+  document.addEventListener('dragend', function (ev) { $$('.dragging').forEach(function (e) { e.classList.remove('dragging'); }); $$('.kcol.drop').forEach(function (e) { e.classList.remove('drop'); }); });
+  document.addEventListener('dragover', function (ev) { var col = ev.target.closest && ev.target.closest('[data-drop]'); if (!col || dragId == null) return; ev.preventDefault(); $$('.kcol.drop').forEach(function (e) { if (e !== col) e.classList.remove('drop'); }); col.classList.add('drop'); });
+  document.addEventListener('drop', function (ev) {
+    var col = ev.target.closest && ev.target.closest('[data-drop]'); if (!col || dragId == null) return;
+    ev.preventDefault();
+    var st = col.getAttribute('data-drop'); var f = byId(dragId); var id = dragId; dragId = null;
+    if (f && f.status !== st) patchFinding(id, { status: st }, '#' + id + ' עבר ל״' + lbl(ST, st) + '״', true);
+  });
+
+  function closeRowMenuOnScroll() { if (/^(st|as)-/.test(S.menu || '') && Date.now() - (S.menuAt || 0) > 300) { S.menu = null; render(); } }
+  window.addEventListener('scroll', closeRowMenuOnScroll, { passive: true });
+  window.addEventListener('resize', closeRowMenuOnScroll);
+  document.addEventListener('scroll', function (ev) { if (ev.target && ev.target.classList && ev.target.classList.contains('table')) closeRowMenuOnScroll(); }, true);
+
+  // ------------------------------------------------------------------ live refresh
+  var refreshing = false;
+  function refreshVersion(force) {
+    if (S.phase !== 'app' || refreshing) return;
+    refreshing = true;
+    api('GET', '/api/version').then(function (j) {
+      var syncChanged = JSON.stringify(j.sync) !== JSON.stringify(S.sync);
+      S.sync = j.sync;
+      if (j.version !== S.version || force) {
+        var ae = document.activeElement;
+        var typing = ae && (ae.tagName === 'TEXTAREA' || (ae.tagName === 'INPUT' && ae.type !== 'checkbox' && ae.type !== 'radio'));
+        if (typing && ae.id !== 'q') return; // don't disturb typing; next tick will refresh
+        return bootstrap().then(render);
+      }
+      if (syncChanged) { var ae2 = document.activeElement; if (!(ae2 && (ae2.tagName === 'TEXTAREA' || ae2.tagName === 'INPUT'))) render(); }
+    }).catch(function () { /* offline; retry next tick */ }).finally(function () { refreshing = false; });
+  }
+  setInterval(function () { if (!document.hidden) refreshVersion(); }, 30000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshVersion(); });
+
+  // ------------------------------------------------------------------ start
+  function start() {
+    if (INIT.f && !S.fUsed) { S.fUsed = true; location.hash = '#/f/' + INIT.f; }
+    var r = parseRoute();
+    if (r === 'invite') { r = 'add'; location.hash = '#/add'; }
+    if (!getName()) { S.phase = 'login'; render(); return; }
+    S.route = r;
+    openAppNow();
+  }
+  start();
+})();
+
+</script>
+</body>
+</html>
