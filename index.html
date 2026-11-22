@@ -166,6 +166,14 @@ svg{flex:0 0 auto}
 .person-btn .av{width:20px;height:20px;font-size:9px}
 .person-menu{min-width:240px}
 
+.pbox{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border-strong);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:#fff}
+.person-opt.sel .pbox{background:var(--accent);border-color:var(--accent)}
+.person-foot{position:sticky;bottom:0;display:flex;gap:8px;padding:8px 6px 4px;background:var(--surface);border-top:1px solid var(--border);margin-top:4px}
+.person-foot .btn{flex:1;justify-content:center;height:40px}
+.avstack{display:inline-flex}
+.avstack .av{margin-inline-start:-6px;box-shadow:0 0 0 2px var(--surface)}
+.avstack .av:first-child{margin-inline-start:0}
+
 /* ---------- table */
 .table{border:1px solid var(--border);border-radius:12px;background:var(--surface);overflow-x:auto}
 .thead,.trow{display:flex;align-items:center;padding-inline:12px}
@@ -855,7 +863,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
         if (fl[k] && fl[k].length && fl[k].indexOf(fval(f, k)) < 0) return false;
       }
       if (mine && !isMine(f)) return false;
-      if (fl.person && !belongsTo(f, fl.person)) return false;
+      if (fl.persons && fl.persons.length && !fl.persons.some(function (id) { return belongsTo(f, id); })) return false;
       if (q) {
         var hay = ('#' + f.id + ' ' + f.id + ' ' + f.title + ' ' + (f.description || '') + ' ' + (f.screen || '') + ' ' + (f.module || '') + ' ' + (f.steps || '') + ' ' + uname(f.assigneeId)).toLowerCase();
         if (hay.indexOf(q) < 0) return false;
@@ -897,21 +905,27 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     var ST_FILTERS = [['notdone', 'לא טופלו', OPEN]].concat(ST.map(function (x) { return [x[0], x[1], [x[0]]]; })).concat([['all', 'הכל', null]]);
     var stDef = ST_FILTERS.find(function (x) { return x[0] === stSel; }) || ST_FILTERS[0];
     L.f.status = stDef[2] ? stDef[2].slice() : [];
-    var person = scope === 'person' && L.person ? user(L.person) : null;
-    if (scope === 'person' && !person) scope = 'mine';
+    var persons = (L.persons || []).map(function (id) { return user(id); }).filter(Boolean);
+    if (scope === 'person' && !persons.length) scope = 'mine';
+    if (scope !== 'person') persons = [];
     L.mine = scope === 'mine';
-    if (person) L.f.person = person.id;
-    var inScope = S.findings.filter(function (f) { return scope === 'all' || (person ? belongsTo(f, person.id) : isMine(f)); });
+    if (persons.length) L.f.persons = persons.map(function (u) { return u.id; });
+    var inPersons = function (f) { return persons.some(function (u) { return belongsTo(f, u.id); }); };
+    var inScope = S.findings.filter(function (f) { return scope === 'all' || (persons.length ? inPersons(f) : isMine(f)); });
     var personOpen = S.menu === 'person-f';
     var stOf = function (f) { return !L.f.status.length || L.f.status.indexOf(f.status) >= 0; };
-    var personMenu = personOpen ? '<div class="menu assign-menu person-menu" role="listbox" aria-label="ממצאים של איש צוות"><div class="sheet-grip show-m" aria-hidden="true"></div><div class="menu-h sheet-h">הממצאים של…<button type="button" class="btn icon show-m" data-a="closeMenus" aria-label="סגירה">' + I.x(16) + '</button></div>' +
+    var selIds = (L.persons || []).map(Number);
+    var personMenu = personOpen ? '<div class="menu assign-menu person-menu" role="listbox" aria-multiselectable="true" aria-label="ממצאים של אנשי צוות"><div class="sheet-grip show-m" aria-hidden="true"></div><div class="menu-h sheet-h">הממצאים של… <span class="muted" style="font-weight:400">(אפשר לבחור כמה)</span><button type="button" class="btn icon show-m" data-a="closeMenus" aria-label="סגירה">' + I.x(16) + '</button></div>' +
       activeUsers().slice().sort(function (a, b) { return a.name.localeCompare(b.name, 'he'); }).map(function (u) {
         var n = S.findings.filter(function (f) { return belongsTo(f, u.id) && stOf(f); }).length;
-        var on = person && person.id === u.id;
-        return '<button type="button" role="option" aria-selected="' + on + '" class="menu-item" data-a="personPick" data-v="' + u.id + '">' + av(u, 'av-sm') + '<span style="flex:1">' + esc(u.name) + (u.id === S.me.id ? ' <span class="muted">(אני)</span>' : '') + '</span><span class="menu-meta">' + n + '</span>' + (on ? '<span style="color:var(--accent-text);display:inline-flex">' + I.check() + '</span>' : '') + '</button>';
-      }).join('') + '</div>' : '';
-    var personSeg = '<div class="dd"><button type="button" class="btn person-btn' + (person ? ' on' : '') + '" aria-haspopup="listbox" aria-expanded="' + personOpen + '" data-a="menu" data-v="person-f">' +
-      (person ? av(person, 'av-sm') + '<span class="truncate" style="max-width:120px">' + esc(person.name) + '</span><span class="count">' + inScope.length + '</span>' : 'לפי איש צוות') + I.chev(13) + '</button>' + personMenu + '</div>';
+        var on = selIds.indexOf(u.id) >= 0;
+        return '<button type="button" role="option" aria-selected="' + on + '" class="menu-item person-opt' + (on ? ' sel' : '') + '" data-a="personPick" data-v="' + u.id + '"><span class="pbox" aria-hidden="true">' + (on ? I.check(12) : '') + '</span>' + av(u, 'av-sm') + '<span style="flex:1">' + esc(u.name) + (u.id === S.me.id ? ' <span class="muted">(אני)</span>' : '') + '</span><span class="menu-meta">' + n + '</span></button>';
+      }).join('') +
+      '<div class="person-foot"><button type="button" class="btn primary" data-a="closeMenus">' + (selIds.length ? 'הצג ' + selIds.length + ' נבחרים' : 'סגירה') + '</button>' + (selIds.length ? '<button type="button" class="btn" data-a="personClear">נקה בחירה</button>' : '') + '</div></div>' : '';
+    var personLabel = persons.length === 1 ? av(persons[0], 'av-sm') + '<span class="truncate" style="max-width:120px">' + esc(persons[0].name) + '</span>'
+      : persons.length > 1 ? '<span class="avstack">' + persons.slice(0, 3).map(function (u) { return av(u, 'av-sm'); }).join('') + '</span><span>' + persons.length + ' אנשי צוות</span>' : 'לפי איש צוות';
+    var personSeg = '<div class="dd"><button type="button" class="btn person-btn' + (persons.length ? ' on' : '') + '" aria-haspopup="listbox" aria-expanded="' + personOpen + '" data-a="menu" data-v="person-f">' +
+      personLabel + (persons.length ? '<span class="count">' + inScope.length + '</span>' : '') + I.chev(13) + '</button>' + personMenu + '</div>';
     var modSel = L.mod || '';
     if (modSel) L.f.module = [modSel === '__none' ? '' : modSel];
     var stScoped = inScope.filter(function (f) { return !L.f.status.length || L.f.status.indexOf(f.status) >= 0; });
@@ -937,7 +951,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     var mineN = S.findings.filter(isMine).length;
     var mineOpen = S.findings.filter(function (f) { return isMine(f) && OPEN.indexOf(f.status) >= 0; }).length;
     var seg = function (v, label, n) { var on = scope === v; return '<button class="btn' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-a="scope" data-v="' + v + '">' + label + '<span class="count">' + n + '</span></button>'; };
-    return '<div class="page-h"><div class="grow"><h1>' + (scope === 'mine' ? 'הממצאים שלי' : person ? 'הממצאים של ' + esc(person.name) : 'כל הממצאים') + '</h1><span class="sub">' + (person ? inScope.length + ' ממצאים שמשויכים אליו/ה (או שרשם/ה ולא שויכו)' : scope === 'mine' ? mineN + ' ממצאים שמשויכים אליך (או שרשמת ולא שויכו) · ' + mineOpen + ' פתוחים' : S.findings.length + ' ממצאים של כל הצוות') + '</span></div>' +
+    return '<div class="page-h"><div class="grow"><h1>' + (scope === 'mine' ? 'הממצאים שלי' : persons.length ? 'הממצאים של ' + esc(persons.map(function (u) { return u.name; }).join(', ')) : 'כל הממצאים') + '</h1><span class="sub">' + (persons.length ? inScope.length + ' ממצאים שמשויכים ' + (persons.length > 1 ? 'אליהם' : 'אליו/ה') + ' (או שנרשמו על ידם ולא שויכו)' : scope === 'mine' ? mineN + ' ממצאים שמשויכים אליך (או שרשמת ולא שויכו) · ' + mineOpen + ' פתוחים' : S.findings.length + ' ממצאים של כל הצוות') + '</span></div>' +
       '<span class="hide-m">' + syncIndicator() + '</span>' +
       (S.me.isAdmin ? '<button class="btn hide-m" data-a="exportCsv">' + I.download() + 'ייצוא ל-Excel</button>' : '') + '</div>' +
       '<div class="toolbar">' + seg('mine', 'הממצאים שלי', mineN) + personSeg + seg('all', 'של כולם', S.findings.length) +
@@ -1451,7 +1465,15 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     noop: function () {},
     qaAssign: function (el) { S.qa.assigneeId = el.getAttribute('data-v'); S.menu = null; render(); var b = $('#qa-as'); if (b) b.focus({ preventScroll: true }); },
     scope: function (el) { S.list.scope = el.getAttribute('data-v'); S.menu = null; render(); },
-    personPick: function (el) { S.list.scope = 'person'; S.list.person = Number(el.getAttribute('data-v')); S.menu = null; render(); },
+    personPick: function (el) {
+      var id = Number(el.getAttribute('data-v')), list = (S.list.persons || []).slice(), i = list.indexOf(id);
+      if (i >= 0) list.splice(i, 1); else list.push(id);
+      S.list.persons = list; S.list.scope = list.length ? 'person' : (S.list.scope === 'person' ? 'mine' : S.list.scope);
+      var box = $('.person-menu'), keep = box ? box.scrollTop : 0;
+      render(); // menu stays open so several people can be picked
+      var nb = $('.person-menu'); if (nb) { nb.style.animation = 'none'; nb.scrollTop = keep; }
+    },
+    personClear: function () { S.list.persons = []; if (S.list.scope === 'person') S.list.scope = 'mine'; render(); var nb = $('.person-menu'); if (nb) nb.style.animation = 'none'; },
     stMore: function () {
       var c = $('.stchips'); if (!c) return;
       var step = Math.round(c.clientWidth * 0.7), start = c.scrollLeft, target = start - step;
