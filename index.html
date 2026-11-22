@@ -532,7 +532,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
   function bootstrap() { return api('GET', '/api/bootstrap').then(function (j) { applyBoot(j); lsSet('pt_cache', j); }); }
   // Open the app immediately (no waiting for the server): show the last data saved on this device,
   // or an empty screen for a first visit, and refresh from the server in the background.
-  var DEFAULT_MODULES = ['מכירות', 'רכש', 'ייצור', 'מלאי', 'כספים', 'לוגיסטיקה', 'אחר'].map(function (n) { return { name: n, defaultAssigneeId: null }; });
+  var DEFAULT_MODULES = ['מכירות', 'רכש', 'ייצור', 'מלאי', 'כספים', 'לוגיסטיקה', 'פיתוח מוצר', 'אחר'].map(function (n) { return { name: n, defaultAssigneeId: null }; });
   function sameName(a, b) { return String(a || '').replace(/\s+/g, ' ').trim().toLowerCase() === String(b || '').replace(/\s+/g, ' ').trim().toLowerCase(); }
   function openAppNow() {
     var c = lsGet('pt_cache', null);
@@ -726,7 +726,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
   }
   function viewAdd() {
     var q = S.qa;
-    var success = q.last ? '<div class="success" role="status">' + I.okc(22) + '<span style="flex:1;font-size:15px;font-weight:600">ממצא #' + q.last.id + ' נשמר</span><button class="linkbtn" data-a="qaUndo">ביטול</button><button class="linkbtn" data-a="open" data-id="' + q.last.id + '">פתיחה</button></div>' : '';
+    var success = q.last ? '<div class="success" role="status">' + I.okc(22) + '<span style="flex:1;font-size:15px;font-weight:600">ממצא #' + q.last.id + ' נשמר' + (q.last.who ? ' ושויך ל' + esc(q.last.who) : '') + '</span><button class="linkbtn" data-a="qaUndo">ביטול</button><button class="linkbtn" data-a="open" data-id="' + q.last.id + '">פתיחה</button></div>' : '';
     return '<div class="page-h hide-m"><div class="grow"></div>' + syncIndicator() + themeBtn() + '</div>' +
       '<div class="qa">' +
       '<h1>מה מצאת?</h1>' +
@@ -738,6 +738,15 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
       '<fieldset style="border:0;padding:0;margin:0"><legend class="lab" style="padding:0;margin-bottom:10px">למה זה קשור? <small>לא חובה</small></legend><div style="display:flex;flex-wrap:wrap;gap:8px">' +
       S.modules.map(function (m) { var on = q.module === m.name; return '<button type="button" class="mchip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" data-a="qaModule" data-v="' + esc(m.name) + '">' + (on ? I.check(15) : '') + esc(m.name) + '</button>'; }).join('') +
       '</div></fieldset>' +
+      (function () {
+        var people = activeUsers().slice().sort(function (a, b) { return a.name.localeCompare(b.name, 'he'); });
+        var auto = q.module && !q.assigneeId ? routeFor(q.module) : null;
+        return '<div class="field" style="max-width:360px"><label for="qa-as" class="lab">למי לשייך? <small>לא חובה</small></label>' +
+          '<select id="qa-as" class="select" style="height:44px;font-size:15px" data-c="qa" data-k="assigneeId">' +
+          '<option value="">' + (auto ? 'אוטומטי לפי המחלקה: ' + esc(auto.name) : 'ללא שיוך') + '</option>' +
+          people.map(function (u) { return '<option value="' + u.id + '"' + (String(q.assigneeId) === String(u.id) ? ' selected' : '') + '>' + esc(u.name) + (u.id === S.me.id ? ' (אני)' : '') + '</option>'; }).join('') +
+          '</select></div>';
+      })() +
       '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px"><button type="submit" id="qa-add" class="addbtn"' + (!q.text.trim() || q.busy ? ' disabled' : '') + '>' + I.plus(20, 2.6) + (q.busy ? 'שומר…' : 'הוסף ממצא') + '</button>' +
       '<button type="button" class="ghost" data-a="pickFile" data-target="qa">' + I.image() + 'צילום מסך</button></div>' +
       '</form></div>';
