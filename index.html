@@ -253,6 +253,18 @@ details.more[open] summary .chev{transform:rotate(180deg)}
 .assign-btn .chev{color:var(--text-3)}
 .assign-btn .av{width:26px;height:26px;font-size:10.5px}
 .assign-menu{width:100%;min-width:260px;max-height:340px;z-index:31}
+.sheet-h{display:flex;align-items:center;justify-content:space-between}
+@media (max-width:900px){
+  /* phones: the people list opens as a bottom sheet above the tab bar, fully visible and scrollable */
+  .backdrop.sheet-bg{background:rgba(10,12,16,.45);z-index:58}
+  .assign-menu{position:fixed;top:auto;left:0;right:0;bottom:0;inset-inline-start:0;width:100%;min-width:0;max-height:75vh;z-index:60;border-radius:18px 18px 0 0;border-bottom:0;padding:6px 10px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(16,24,40,.25);animation:sheetUp .18s ease-out}
+  .assign-menu .menu-item{min-height:52px;font-size:16px}
+  .assign-menu .av-sm{width:28px;height:28px;font-size:11px}
+  .assign-menu .sheet-h{position:sticky;top:0;background:var(--surface);z-index:1;font-size:15px;font-weight:700;color:var(--text);padding:6px 6px 8px}
+  .sheet-grip{width:40px;height:5px;border-radius:999px;background:var(--border-strong);margin:4px auto 6px}
+}
+@keyframes sheetUp{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){.assign-menu{animation:none}}
 
 /* ---------- drawer */
 .drawer-bg{position:fixed;inset:0;background:rgba(10,12,16,.35);z-index:50}
@@ -715,7 +727,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
       return '<a href="#/' + n[0] + '" class="' + (r === n[0] ? 'active' : '') + '">' + n[2] + n[1] + '</a>';
     }).join('') + '</nav>';
     var fab = r !== 'add' ? '<a class="fab" href="#/add">' + I.plus(20, 2.4) + 'ממצא חדש</a>' : '';
-    var backdrop = S.menu ? '<button class="backdrop" data-a="closeMenus" aria-label="סגירת התפריט"></button>' : '';
+    var backdrop = S.menu ? '<button class="backdrop' + (S.menu === 'qa-as' ? ' sheet-bg' : '') + '" data-a="closeMenus" aria-label="סגירת התפריט"></button>' : '';
     return '<div class="shell">' + backdrop + side + '<main class="main">' + mobileTop + content + '</main></div>' + rowMenu() + tabbar + fab + (S.drawer ? viewDrawer() : '') + (S.modal ? viewModal() : '');
   }
 
@@ -763,7 +775,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
         return '<div class="field" style="max-width:380px"><span class="lab" id="qa-as-l">למי לשייך? <small>לא חובה</small></span><div class="dd">' +
           '<button type="button" id="qa-as" class="assign-btn" aria-labelledby="qa-as-l" aria-haspopup="listbox" aria-expanded="' + open + '" data-a="menu" data-v="qa-as">' + av(shown, '') +
           '<span class="truncate' + (shown ? '' : ' muted') + '" style="flex:1;text-align:start">' + esc(label) + '</span>' + I.chev(14) + '</button>' +
-          (open ? '<div class="menu assign-menu" role="listbox" aria-label="למי לשייך"><div class="menu-h">למי לשייך</div>' + item(null) + people.map(item).join('') + '</div>' : '') +
+          (open ? '<div class="menu assign-menu" role="listbox" aria-label="למי לשייך"><div class="sheet-grip show-m" aria-hidden="true"></div><div class="menu-h sheet-h">למי לשייך<button type="button" class="btn icon show-m" data-a="closeMenus" aria-label="סגירה">' + I.x(16) + '</button></div>' + item(null) + people.map(item).join('') + '</div>' : '') +
           '</div></div>';
       })() +
       '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px"><button type="submit" id="qa-add" class="addbtn"' + (!q.text.trim() || q.busy ? ' disabled' : '') + '>' + I.plus(20, 2.6) + (q.busy ? 'שומר…' : 'הוסף ממצא') + '</button>' +
