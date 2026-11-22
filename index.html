@@ -247,6 +247,13 @@ details.more summary{cursor:pointer;font-weight:600;font-size:14px;color:var(--t
 details.more summary::-webkit-details-marker{display:none}
 details.more[open] summary .chev{transform:rotate(180deg)}
 
+.assign-btn{display:flex;align-items:center;gap:10px;width:100%;height:48px;padding:0 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:15px;font-weight:500;cursor:pointer;text-align:start}
+.assign-btn:hover{border-color:var(--border-strong);background:var(--hover)}
+.assign-btn[aria-expanded="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.assign-btn .chev{color:var(--text-3)}
+.assign-btn .av{width:26px;height:26px;font-size:10.5px}
+.assign-menu{width:100%;min-width:260px;max-height:340px;z-index:31}
+
 /* ---------- drawer */
 .drawer-bg{position:fixed;inset:0;background:rgba(10,12,16,.35);z-index:50}
 .drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(720px,100vw);background:var(--surface);z-index:51;box-shadow:var(--shadow);display:flex;flex-direction:column;border-inline-start:1px solid var(--border)}
@@ -740,12 +747,24 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
       '</div></fieldset>' +
       (function () {
         var people = activeUsers().slice().sort(function (a, b) { return a.name.localeCompare(b.name, 'he'); });
+        var chosen = q.assigneeId ? user(q.assigneeId) : null;
         var auto = q.module && !q.assigneeId ? routeFor(q.module) : null;
-        return '<div class="field" style="max-width:360px"><label for="qa-as" class="lab">למי לשייך? <small>לא חובה</small></label>' +
-          '<select id="qa-as" class="select" style="height:44px;font-size:15px" data-c="qa" data-k="assigneeId">' +
-          '<option value="">' + (auto ? 'אוטומטי לפי המחלקה: ' + esc(auto.name) : 'ללא שיוך') + '</option>' +
-          people.map(function (u) { return '<option value="' + u.id + '"' + (String(q.assigneeId) === String(u.id) ? ' selected' : '') + '>' + esc(u.name) + (u.id === S.me.id ? ' (אני)' : '') + '</option>'; }).join('') +
-          '</select></div>';
+        var open = S.menu === 'qa-as';
+        var shown = chosen || auto;
+        var label = chosen ? chosen.name + (chosen.id === S.me.id ? ' (אני)' : '') : auto ? 'אוטומטי לפי המחלקה: ' + auto.name : 'ללא שיוך';
+        var load = function (u) { return S.findings.filter(function (x) { return x.assigneeId === u.id && OPEN.indexOf(x.status) >= 0; }).length; };
+        var item = function (u) {
+          var sel = u ? String(q.assigneeId) === String(u.id) : !q.assigneeId;
+          return '<button type="button" role="option" aria-selected="' + sel + '" class="menu-item" data-a="qaAssign" data-v="' + (u ? u.id : '') + '">' + av(u, 'av-sm') +
+            '<span style="flex:1">' + (u ? esc(u.name) + (u.id === S.me.id ? ' <span class="muted">(אני)</span>' : '') : (auto ? 'אוטומטי לפי המחלקה' : 'ללא שיוך')) + '</span>' +
+            (u ? '<span class="menu-meta">' + load(u) + ' פתוחים</span>' : '') +
+            (sel ? '<span style="color:var(--accent-text);display:inline-flex">' + I.check() + '</span>' : '') + '</button>';
+        };
+        return '<div class="field" style="max-width:380px"><span class="lab" id="qa-as-l">למי לשייך? <small>לא חובה</small></span><div class="dd">' +
+          '<button type="button" id="qa-as" class="assign-btn" aria-labelledby="qa-as-l" aria-haspopup="listbox" aria-expanded="' + open + '" data-a="menu" data-v="qa-as">' + av(shown, '') +
+          '<span class="truncate' + (shown ? '' : ' muted') + '" style="flex:1;text-align:start">' + esc(label) + '</span>' + I.chev(14) + '</button>' +
+          (open ? '<div class="menu assign-menu" role="listbox" aria-label="למי לשייך"><div class="menu-h">למי לשייך</div>' + item(null) + people.map(item).join('') + '</div>' : '') +
+          '</div></div>';
       })() +
       '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px"><button type="submit" id="qa-add" class="addbtn"' + (!q.text.trim() || q.busy ? ' disabled' : '') + '>' + I.plus(20, 2.6) + (q.busy ? 'שומר…' : 'הוסף ממצא') + '</button>' +
       '<button type="button" class="ghost" data-a="pickFile" data-target="qa">' + I.image() + 'צילום מסך</button></div>' +
@@ -1339,6 +1358,7 @@ pre.copy{white-space:pre-wrap;font-family:inherit;font-size:13.5px;background:va
     goSettings: function () { location.hash = '#/settings'; },
     closeMenus: function () { S.menu = null; render(); },
     noop: function () {},
+    qaAssign: function (el) { S.qa.assigneeId = el.getAttribute('data-v'); S.menu = null; render(); var b = $('#qa-as'); if (b) b.focus({ preventScroll: true }); },
     scope: function (el) { S.list.scope = el.getAttribute('data-v'); S.menu = null; render(); },
     pickName: function (el) { enterAs(el.getAttribute('data-v')); },
     menu: function (el) {
